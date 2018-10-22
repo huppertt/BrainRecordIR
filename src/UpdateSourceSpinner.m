@@ -1,0 +1,4 @@
+function UpdateSourceSpinner(handles)
+
+
+return
