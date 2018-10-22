@@ -1,0 +1,3 @@
+Default Online Averaging Module
+
+Written by T. Huppert

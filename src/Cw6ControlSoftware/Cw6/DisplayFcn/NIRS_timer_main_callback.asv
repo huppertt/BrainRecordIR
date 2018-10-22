@@ -1,0 +1,51 @@
+function NIRS_timer_main_callback(varargin)
+%This is the main timer callack function to handle the real-time processing
+
+figurehandle=findobj('tag','cw6figure');
+Cw6_data = get(figurehandle,'UserData');
+
+AquistionButtons=findobj('tag','AquistionButtons');
+system=get(AquistionButtons,'Userdata');
+
+if(~isrunning(system.MainDevice))
+    return;
+end
+try
+    numSamples=samplesavaliable(system.MainDevice)-1;
+catch
+    return
+end
+if(numSamples<=0)
+    return
+end
+
+[currentdata,currenttime]=getsamples(system.MainDevice,numSamples);
+
+if(~isempty(system.AuxDevice))
+    numSamplesAux=samplesavaliable(system.AuxDevice);
+    [currentauxdata,currentauxtime]=getsamples(system.AuxDevice,numSamples);
+else
+    currentauxdata=[];
+    currentauxtime=[];
+end
+
+[currenttime,currentdata,currentauxdata,currentconcdata]=...
+    processRTfunctions(currenttime,currentdata,currentauxdata);
+
+%Add back to the data structure
+Cw6_data = get(figurehandle,'UserData');
+Cw6_data.data.raw=[Cw6_data.data.raw; currentdata];
+Cw6_data.data.raw_t=[Cw6_data.data.raw_t; currenttime'];
+Cw6_data.data.conc=[Cw6_data.data.conc; currentconcdata];
+Cw6_data.data.aux=[Cw6_data.data.aux; currentauxdata];
+
+set(figurehandle,'UserData',Cw6_data);
+
+
+ProgressBar=get(findobj('tag','Cw6Progress'),'UserData');
+set(ProgressBar,'Maximum',ScanTime);
+set(ProgressBar,'Value',0);
+
+plotmainwindow;
+
+return

@@ -1,0 +1,27 @@
+function stim=catchstim(stim,auxdata,time)
+
+persistent meanstimchan;
+persistent stdstimchan;
+persistent count;
+
+if(isempty(auxdata))
+    meanstimchan=0;
+    stdstimchan=0;
+    count=0;
+end
+
+stimchannel=auxdata(1,:);
+
+meanstimchan=(meanstimchan*count+stimchannel)/(count+1);
+stdstimchan=(stdstimchan*count+(stimchannel-meanstimchan)^2)/(count+1);
+count=count+1;
+
+stimchannel=1;
+
+thres
+
+if(>thres)
+    stim=[stim time(end)];
+end
+
+

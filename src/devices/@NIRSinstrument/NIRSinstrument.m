@@ -21,7 +21,7 @@ classdef NIRSinstrument
                    
        function obj=set.type(obj,type)
            if(strcmp(type,'Simulator'))
-               device=Simulator;
+               obj.device=Simulator;
            else
             error('unknown type');
            end

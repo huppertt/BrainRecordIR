@@ -1,0 +1,37 @@
+function [currentconcdata,currentconctime]=processRTMBLL(time,currentdata,auxdata,concdata)
+
+,currenttime,Measlist,invE)
+
+global kalmanparameters_MBLL;
+
+if(isempty(kalmanparameters_MBLL))
+    
+    R=1;
+    Q=.01;
+    
+    nmeas=size(currentdata,1);
+    
+    %Initial implementation
+    kalmanparameters_MBLL.xk=currentdata(:,1);
+    kalmanparameters_MBLL.pk=eye(nmeas);
+    kalmanparameters_MBLL.H=eye(nmeas);
+    kalmanparameters_MBLL.F=eye(nmeas);
+    kalmanparameters_MBLL.R=R*eye(nmeas);
+    kalmanparameters_MBLL.Q=Q*eye(nmeas);
+    kalmanparameters_MBLL.I=eye(nmeas);
+end
+
+Io=zeros(size(currentdata));
+
+for tIdx=1:size(currentdata,2)
+    [kalmanparameters_MBLL, Io(:,tIdx)]=RT_kalmanfilter(currentdata(:,tIdx),kalmanparameters_MBLL);
+end
+
+dOD=-log(currentdata./Io);
+
+lst1=find(Measlist(:,4)==1);
+lst2=find(Measlist(:,4)==2);
+
+currentconcdata=invE*[dOD(lst1,:); dOD(lst2,:)];
+
+currentconctime=currenttime;

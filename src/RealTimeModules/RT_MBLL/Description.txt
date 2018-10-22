@@ -1,0 +1,9 @@
+Real-time Modified Beer-Lambert Module
+
+Written by T. Huppert, University of Pittsburgh
+
+This module computes oxy- and deoxy-hemoglobin changes
+in real-time.  This code uses a online Kalman filter to 
+estimate the mean intensity of light for each measurement.  
+
+Note: no differential pathlength factors are currently used. 	
