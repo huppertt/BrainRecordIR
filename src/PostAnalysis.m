@@ -17,7 +17,7 @@ if(cnt==0)
     return
 end
 cnt=cnt*2+1;
-cnt2=0;
+cnt2=0; cnt3=1;
 
 if(isfield(handles,'file_list_rawfiles') && ~isempty(handles.file_list_rawfiles))
     for i=1:length(handles.file_list_rawfiles)
@@ -34,28 +34,30 @@ if(isfield(handles,'file_list_rawfiles') && ~isempty(handles.file_list_rawfiles)
         cnt2=cnt2+1;
         set(handles.file_list_rawfiles(i),'Userdata',raw);
         
-        h=waitbar(cnt2/cnt,h);
-        job=nirs.modules.GLM;
-        SubjStats(cnt2)=job.run(raw(3));
-        
-        if(~isfield(handles,'file_list_statsfiles'))
-            handles.file_list_statsfiles = uitreenode(handles.filelist_stats,'Text',handles.file_list_rawfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt2));
-        else
-            lst=[];
-            for j=1:length(handles.file_list_statsfiles)
-                if(strcmp(handles.file_list_statsfiles(j).Text,handles.file_list_rawfiles(i).Text))
-                    lst=j;
-                    break;
+        if(~isempty(raw(3).stimulus))
+            h=waitbar(cnt2/cnt,h);
+            job=nirs.modules.GLM;
+            SubjStats(cnt3,1)=job.run(raw(3));
+            if(~isfield(handles,'file_list_statsfiles'))
+                handles.file_list_statsfiles = uitreenode(handles.filelist_stats,'Text',handles.file_list_rawfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt3));
+            else
+                lst=[];
+                for j=1:length(handles.file_list_statsfiles)
+                    if(strcmp(handles.file_list_statsfiles(j).Text,handles.file_list_rawfiles(i).Text))
+                        lst=j;
+                        break;
+                    end
+                end
+                if(~isempty(lst))
+                    set(handles.file_list_statsfiles(lst),'Userdata',SubjStats(cnt2));
+                else
+                    
+                    handles.file_list_statsfiles(end+1) = uitreenode(handles.filelist_stats,'Text',handles.file_list_rawfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt3));
                 end
             end
-            if(~isempty(lst))
-                set(handles.file_list_statsfiles(lst),'Userdata',SubjStats(cnt2));
-            else
-                
-                handles.file_list_statsfiles(end+1) = uitreenode(handles.filelist_stats,'Text',handles.file_list_rawfiles(i).Text,'NodeData',[],'Userdata',SubjStast(cnt2));
-            end
+              cnt3=cnt3+1;
+           
         end
-        
         
     end
 end
@@ -77,28 +79,30 @@ if(isfield(handles,'file_list_loadedfiles') && ~isempty(handles.file_list_loaded
         cnt2=cnt2+1;
         set(handles.file_list_loadedfiles(i),'Userdata',raw);
         
-        h=waitbar(cnt2/cnt,h);
-        job=nirs.modules.GLM;
-        SubjStats(cnt2)=job.run(raw(3));
-        
-        if(~isfield(handles,'file_list_statsfiles'))
-            handles.file_list_statsfiles = uitreenode(handles.filelist_stats,'Text',handles.file_list_loadedfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt2));
-        else
-            lst=[];
-            for j=1:length(handles.file_list_statsfiles)
-                if(strcmp(handles.file_list_statsfiles(j).Text,handles.file_list_loadedfiles(i).Text))
-                    lst=j;
-                    break;
-                end
-            end
-            if(~isempty(lst))
-                set(handles.file_list_statsfiles(lst),'Userdata',SubjStats(cnt2));
+        if(~isempty(raw(3).stimulus))
+            h=waitbar(cnt2/cnt,h);
+            job=nirs.modules.GLM;
+            SubjStats(cnt3,1)=job.run(raw(3));
+           if(~isfield(handles,'file_list_statsfiles'))
+                handles.file_list_statsfiles = uitreenode(handles.filelist_stats,'Text',handles.file_list_loadedfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt3));
             else
-                
-                handles.file_list_loadedfiles(end+1) = uitreenode(handles.filelist_stats,'Text',handles.file_list_loadedfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt2));
-            end
+                lst=[];
+                for j=1:length(handles.file_list_statsfiles)
+                    if(strcmp(handles.file_list_statsfiles(j).Text,handles.file_list_loadedfiles(i).Text))
+                        lst=j;
+                        break;
+                    end
+                end
+                if(~isempty(lst))
+                    set(handles.file_list_statsfiles(lst),'Userdata',SubjStats(cnt2));
+                else
+                    
+                    handles.file_list_loadedfiles(end+1) = uitreenode(handles.filelist_stats,'Text',handles.file_list_loadedfiles(i).Text,'NodeData',[],'Userdata',SubjStats(cnt3));
+                end
+           end
+              cnt3=cnt3+1;
+           
         end
-        
         
     end
 end

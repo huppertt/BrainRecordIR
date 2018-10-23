@@ -1,29 +1,36 @@
 classdef Simulator < handle
     properties
         sample_rate;
-        samples_avaliable;
         isrunning;
-        nmeas;
-        data;
-        timer;
-        
+    end
+    properties( Dependent = true )
+        samples_avaliable;
     end
     
     
+    properties(Hidden = true)
+       data;
+       nmeas;
+       cnt;
+       timer;
+       probe;
+    end
     methods
         function obj=Simulator
             obj.isrunning=false;
-            obj.samples_avaliable=0;
             obj.sample_rate=10;
             obj.nmeas=0;
             obj.timer=timer;
+            obj.cnt=0;
             set(obj.timer,'ExecutionMode','fixedRate');
             set(obj.timer,'Period',1/obj.sample_rate);
-            set(obj.timer,'TimerFcn',@updatedata);
-            set(obj.timer,'Userdata',obj);
-            
+            set(obj.timer,'TimerFcn',@timerfcn);
+             
         end
                    
+        function n = get.samples_avaliable(obj)
+            n=min(get(obj.timer,'TasksExecuted')-obj.cnt,length(obj.data.time));
+        end
        function obj=setLaserState(obj,lIdx,state)
             % do nothing
        end
@@ -32,17 +39,21 @@ classdef Simulator < handle
            % do nothing
        end
        
-       function obj = sendMLinfo(object,probe)
+       function obj = sendMLinfo(obj,probe)
            obj.nmeas=height(probe.link);
-           obj.data = nirs.testing.simARNoise( probe, [0:30000]/obj.sample_rate);
+           obj.probe=probe;
        end
        
        function obj = Start(obj)
+           obj.cnt=0;
+           obj.isrunning=true;
+           obj.data = nirs.testing.simARNoise( obj.probe, [0:30000]/obj.sample_rate);
            start(obj.timer);
        end
        
        
        function obj= Stop(obj);
+           obj.isrunning=false;
            stop(obj.timer);
        end
        
@@ -50,8 +61,8 @@ classdef Simulator < handle
            if(nargin==1)
                nsamples=1;
            end
-           obj.samples_avaliable=min(obj.samples_avaliable,length(obj.data.time));
            nsamples=min(nsamples,obj.samples_avaliable);
+           obj.cnt=obj.cnt+nsamples;
            if(nsamples==0)
                t=[];
                d=zeros(0,obj.nmeas);
@@ -69,11 +80,7 @@ end
        
 end
 
-function updatedata(varargin)
-% Note- handles objects are passed by reference so this will change the
-% main object
-    obj=get(varargin{1},'Userdata');
-    obj.samples_avaliable=1;
-end
+function timerfcn(varargin)
 
+end
 

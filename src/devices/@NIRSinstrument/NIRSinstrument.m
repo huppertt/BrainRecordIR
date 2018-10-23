@@ -1,24 +1,39 @@
 classdef NIRSinstrument
-   properties
-        isrunning;
-        type;
-        sample_rate;
-        sample_avaliable;
+  
+   
+   properties(Hidden = true)
         laserstates;
         lasergains;
         detgains;
         maxLasers=32*4;
         device;
+        type;
+        
    end
+   properties( Dependent = true )
+       samples_avaliable;
+       isrunning;
+       sample_rate;
+   end
+   
    
    methods
        function obj=NIRSinstrument(type)
-            obj.isrunning=false;
-            obj.type=type;
-            obj.sample_rate=10;
-            obj.laserstates=false(obj.maxLasers,1);
+           obj.type=type;
+           obj.laserstates=false(obj.maxLasers,1);
        end
-                   
+       
+       function n = get.isrunning(obj)
+           n=obj.device.isrunning;
+       end
+       
+       function n=get.sample_rate(obj)
+           n=obj.device.sample_rate;
+       end
+       function n = get.samples_avaliable(obj)
+           n=obj.device.samples_avaliable;
+       end
+       
        function obj=set.type(obj,type)
            if(strcmp(type,'Simulator'))
                obj.device=Simulator;
@@ -29,25 +44,25 @@ classdef NIRSinstrument
        end
        function obj=setLaserState(obj,lIdx,state)
             obj.laserstates(lIdx)=state;
-            obj.device.setLaserState(lIdx,state);
+            obj.device=obj.device.setLaserState(lIdx,state);
        end
    
        function obj=setDetectorGain(obj,dIdx,gain)
            obj.detgains(dIdx)=gain;
-           obj.device.setDetectorGain(dIdx,gain);
+           obj.device=obj.device.setDetectorGain(dIdx,gain);
        end
        
-       function obj = sendMLinfo(object,probe)
+       function obj = sendMLinfo(obj,probe)
            obj.device=obj.device.sendMLinfo(probe);
        end
        
        function obj = Start(obj)
-           obj.device.Start();
+           obj.device=obj.device.Start();
        end
        
        
        function obj= Stop(obj)
-           obj.device.Stop();
+           obj.device=obj.device.Stop();
        end
        
        function [d,t]=get_samples(obj,nsamples)

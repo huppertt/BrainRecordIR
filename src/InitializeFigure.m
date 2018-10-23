@@ -18,7 +18,7 @@ end
 handles.Instrument=NIRSinstrument(handles.system.Type);
 
 position=get(0,'ScreenSize');
-position(4)=position(4)*.9;
+position(4)=position(4)*.95;
 
 position=position(1,:);
 position(1)=position(3);
