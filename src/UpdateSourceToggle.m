@@ -1,59 +1,49 @@
-function UpdateSourceToggle(handles,hObject,oI,wI)
+function UpdateSourceToggle(varargin)
 
-src=get(hObject,'UserData');
-src.State=strcmp(get(hObject,'Value'),'on');
+global BrainRecordIRApp;
 
-if(~handles.SrcLink.Value)
-    handles.Instrument=handles.Instrument.setLaserState(src.Laser,src.State);
-    if(src.State)
-        set(handles.Srcspinner(oI,wI),'BackgroundColor','r');
-    else
-        set(handles.Srcspinner(oI,wI),'BackgroundColor','w');
+state=strcmp(varargin{1}.Value,'On');
+laserIdx = varargin{1}.UserData;
+SrcIdx = get(get(varargin{1},'parent'),'Userdata');
+
+BrainRecordIRApp.Device.setLaserState(laserIdx,state);
+
+linkall=BrainRecordIRApp.LinkColorsCheckBox.Value;
+
+if(state)
+    if(BrainRecordIRApp.handles.Lasers{SrcIdx,3}.UserData==laserIdx | linkall)
+        BrainRecordIRApp.handles.Lasers{SrcIdx,3}.Value='On';
+        BrainRecordIRApp.handles.Lasers{SrcIdx,4}.Color=[1 0 0];
+    end
+    if(BrainRecordIRApp.handles.Lasers{SrcIdx,6}.UserData==laserIdx | linkall)  
+        BrainRecordIRApp.handles.Lasers{SrcIdx,6}.Value='On';
+        BrainRecordIRApp.handles.Lasers{SrcIdx,7}.Color=[1 0 0];
     end
 else
-    for(i=1:length(handles.system.Lasers.Laser2OptodeMapping))
-        if(handles.system.Lasers.Laser2OptodeMapping(i).Optode==src.Optode)
-            handles.Instrument=handles.Instrument.setLaserState(i,src.State);
-        end
+    if(BrainRecordIRApp.handles.Lasers{SrcIdx,3}.UserData==laserIdx | linkall)
+        BrainRecordIRApp.handles.Lasers{SrcIdx,3}.Value='Off';
+        BrainRecordIRApp.handles.Lasers{SrcIdx,4}.Color=[0.6 .6 .6];
     end
-    
-    if(src.State)
-        set(hObject,'FontColor',[1 0 0]);
-        set(handles.Srcspinner(oI,:),'BackgroundColor','r');
-        set(handles.SrcButton(oI,:),'Value','on')
-        
-    else
-        set(hObject,'FontColor',[1 0 0]);
-        set(handles.Srcspinner(oI,:),'BackgroundColor','w');
-        set(handles.SrcButton(oI,:),'Value','off');
-        
-    end
-    
-    
-
-end
-set(handles.SrcButton(:),'FontColor',get(handles.Tab(1),'BackgroundColor'));
-
-if(any(handles.Instrument.laserstates))
-    for i=1:3
-        if(~isempty(properties(handles.LaserAllOn(i))))
-            
-            set(handles.LaserAllOn(i),'Value','On')
-            set(handles.LaserAllOnLamp(i),'Color',[1 0 0]);
-        end
-    end
-else
-    for i=1:3
-        if(~isempty(properties(handles.LaserAllOn(i))))
-            
-            set(handles.LaserAllOn(i),'Value','Off')
-            set(handles.LaserAllOnLamp(i),'Color',[.7 .7 .7]);
-        end
+    if(BrainRecordIRApp.handles.Lasers{SrcIdx,6}.UserData==laserIdx | linkall)  
+        BrainRecordIRApp.handles.Lasers{SrcIdx,6}.Value='Off';
+        BrainRecordIRApp.handles.Lasers{SrcIdx,7}.Color=[.6 .6 .6];
     end
 end
 
+anyon=false;
+for i=1:size(BrainRecordIRApp.handles.Lasers,1) 
+    anyon=(anyon | strcmp(BrainRecordIRApp.handles.Lasers{i,3}.Value,'On'));
+    anyon=(anyon | strcmp(BrainRecordIRApp.handles.Lasers{i,6}.Value,'On'));
+end
 
 
-set(handles.BrainRecordIR,'UserData',handles);
-guidata(handles.BrainRecordIR,handles);
+if(anyon)
+    BrainRecordIRApp.SourcesLamp.Color=[1 0 0];
+    BrainRecordIRApp.SwitchSourcesOnOff.Value='On';
+else
+    BrainRecordIRApp.SourcesLamp.Color=[.6 .6 .6];
+    BrainRecordIRApp.SwitchSourcesOnOff.Value='Off';
+end
+
+
 return

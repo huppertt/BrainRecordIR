@@ -1,80 +1,155 @@
 function StartDAQ(handles,hObject)
 
+global BrainRecordIRApp;
 
 
-
-if(handles.Instrument.isrunning)
-    handles.Instrument.Stop();
-    stop(handles.maintimer);
+if(BrainRecordIRApp.Device.isrunning)
+    BrainRecordIRApp.Device.Stop();
+    BrainRecordIRApp.MainTimer.stop();
     
-    set(handles.filelist,'Enable','on');
-    set(handles.ShowSNR,'Enable','on');
-    set(handles.stimwizard,'Enable','on')
-    set(handles.PostAnalysisButton,'Enable','on');
-    set(handles.menu(2),'Enable','on');
-    set(handles.menu(3),'Enable','on');
-    set(handles.StartButton,'Text','Start Collection');
+    try; stop(timerfindall); end;
+    try; delete(timerfindall); end;
+      SystemMessage('Stopping Instrument');
+  
+    
+    BrainRecordIRApp.Tree.Enable='on';   
+    BrainRecordIRApp.ShowNoiseMapButton.Enable='on';
+    BrainRecordIRApp.ShowQualityMenu.Enable='on';
+    
+    %set(handles.stimwizard,'Enable','off')
+    BrainRecordIRApp.RunAnalysisButton.Enable='on';
+    BrainRecordIRApp.RegisterProbe.Enable='on';
+    BrainRecordIRApp.RegisterNewSubjectMenu.Enable='on';
+    BrainRecordIRApp.LoadSavedDataMenu.Enable='on';
+    
+    BrainRecordIRApp.StartButton.Text='Start Collection';
     
     % save data
-    p=fullfile(handles.system.Folders.DefaultData,...
-        handles.Subject.data.demographics('Investigator'),...
-        handles.Subject.data.demographics('study'),...
-        handles.Subject.data.demographics('subject'),...
+    p=fullfile(BrainRecordIRApp.Folders.DefaultData,...
+        BrainRecordIRApp.Subject.data(1).demographics('Investigator'),...
+        BrainRecordIRApp.Subject.data(1).demographics('study'),...
+        BrainRecordIRApp.Subject.data(1).demographics('subject'),...
         datestr(now,'mmm-dd-yyyy'));
-        scannum=length(get(handles.filelist_raw,'children'))+1;
-        filename=[ handles.Subject.data.demographics('subject') ...
+        
+ 
+        scannum=length(get(BrainRecordIRApp.RecordedFilesNode,'children'))+1;
+        
+        filename=[ BrainRecordIRApp.Subject.data(1).demographics('subject') ...
             '-scan' num2str(scannum) '-' datestr(now,'mmm-dd-yyyy-HH-MM-PM') ];
         if(~exist(p,'dir'))
             mkdir(p);
         end
         filename(strfind(filename,' '))=[];
-        if(ismember('.nirs',handles.system.Folders.DefaultFileType))
-            nirs.io.saveDotNirs(handles.Subject.data,[],fullfile(p,[filename '.nirs']));
+        if(ismember('.nirs',BrainRecordIRApp.Folders.DefaultFileType))
+            nirs.io.saveDotNirs(BrainRecordIRApp.Subject.data(1),[],fullfile(p,[filename '.nirs']));
+            filen=fullfile(p,[filename '.nirs']);
+             SystemMessage(['Data saved as: ' filen]);
         end
-        if(ismember('.snirf',handles.system.Folders.DefaultFileType))
-            nirs.io.saveNIR5(handles.Subject.data,fullfile(p,[filename '.nir5']));
+        if(ismember('.snirf',BrainRecordIRApp.Folders.DefaultFileType))
+            nirs.io.saveNIR5(BrainRecordIRApp.Subject.data(1),fullfile(p,[filename '.nir5']));
+             filen=fullfile(p,[filename '.nir5']);
+             SystemMessage(['Data saved as: ' filen]);
         end
+         
+        Subject.data(1).description=filename;
+        a=uitreenode(BrainRecordIRApp.RecordedFilesNode,'Text',filename,'NodeData',[],'Userdata',BrainRecordIRApp.Subject.data);
+        set(BrainRecordIRApp.Tree,'SelectionChangedFcn',@SelectSaveFile)
+        BrainRecordIRApp.Tree.SelectedNodes=a;
         
-        if(~isfield(handles,'file_list_loadedfiles'))
-            handles.file_list_rawfiles = uitreenode(handles.filelist_raw,'Text',filename,'NodeData',[],'Userdata',handles.Subject.data);
-        else
-            handles.file_list_rawfiles(end+1) = uitreenode(handles.filelist_loaded,'Text',filename,'NodeData',[],'Userdata',handles.Subject.data);
-        end
-        set(handles.BrainRecordIR,'UserData',handles);
-        guidata(handles.BrainRecordIR,handles);
-        SelectSaveFile(handles,handles.filelist);
         
         
 else
     % turn off some things that should not be clicked while running
-    set(handles.filelist,'Enable','off');
-    set(handles.ShowSNR,'Enable','off');
-    set(handles.stimwizard,'Enable','off')
-    set(handles.PostAnalysisButton,'Enable','off');
-    set(handles.menu(2),'Enable','off');
-    set(handles.menu(3),'Enable','off');
+    BrainRecordIRApp.Tree.Enable='off';   
+    BrainRecordIRApp.ShowNoiseMapButton.Enable='off';
+    BrainRecordIRApp.ShowQualityMenu.Enable='off';
+    
+    %set(handles.stimwizard,'Enable','off')
+    BrainRecordIRApp.RunAnalysisButton.Enable='off';
+    BrainRecordIRApp.RegisterProbe.Enable='off';
+    BrainRecordIRApp.RegisterNewSubjectMenu.Enable='off';
+    BrainRecordIRApp.LoadSavedDataMenu.Enable='off';
+    
+    fs=BrainRecordIRApp.Device.sample_rate;
+    BrainRecordIRApp.Realtime.BPF = BPF;
+    lpf=BrainRecordIRApp.LowPassEditField.Value;
+    hpf=BrainRecordIRApp.HighPassEditField.Value;
+    if(BrainRecordIRApp.CheckBox.Value & BrainRecordIRApp.CheckBox_2.Value)
+        [fa,fb]=butter(4,[hpf lpf]*2/fs);  %bandpass
+        BrainRecordIRApp.Realtime.BPF.initfilter(fa,fb);
+    elseif(~BrainRecordIRApp.CheckBox.Value & BrainRecordIRApp.CheckBox_2.Value)
+        [fa,fb]=butter(4,[lpf]*2/fs); % low pass only
+        BrainRecordIRApp.Realtime.BPF.initfilter(fa,fb);
+    elseif(BrainRecordIRApp.CheckBox.Value & ~BrainRecordIRApp.CheckBox_2.Value)
+        [fa,fb]=butter(4,[hpf]*2/fs,'high'); % high pass only
+        BrainRecordIRApp.Realtime.BPF.initfilter(fa,fb);
+    else
+        BrainRecordIRApp.Realtime.BPF=[];
+    end
+    
+    
+    
+    BrainRecordIRApp.Realtime.OpticalDensity=OpticalDensity;
+    BrainRecordIRApp.Realtime.MBLL = MBLL;
+    BrainRecordIRApp.Realtime.MBLL.initialize(BrainRecordIRApp.Subject.defaultdata.probe);
+    
+    BrainRecordIRApp.Realtime.SO2 = CalcSO2;
+    
+    %% TODO
+    
+    nsrc=size(BrainRecordIRApp.Realtime.MBLL.probeout.srcPos,1);
+    lst1=[1:floor(nsrc/2)]';
+    lst2=[ceil(nsrc/2):nsrc]';
+    
+    ROI{1}=table(lst1,NaN(size(lst1)),'VariableNames',{'source','detector'});
+    ROI{2}=table(lst2,NaN(size(lst2)),'VariableNames',{'source','detector'});
+   
+    BrainRecordIRApp.Realtime.SO2.initfilter(BrainRecordIRApp.Realtime.MBLL.probeout,ROI);
+    
+    types={};
+    utypes=unique(BrainRecordIRApp.Subject.data(1).probe.link.type);
+for i=1:length(utypes)
+    types{end+1}=['Raw: ' num2str(utypes(i)) 'nm'];
+end
+for i=1:length(utypes)
+    types{end+1}=['dOD: ' num2str(utypes(i)) 'nm'];
+end
+types{end+1}='Hemoglobin: hbo';
+types{end+1}='Hemoglobin: hbr';
 
+set(BrainRecordIRApp.SelectDisplayType,'Items',types);
     
     
-    handles.maintimer=timer;
-    set(handles.maintimer,'ExecutionMode','fixedRate');
-    set(handles.maintimer,'Period',.5);
-    set(handles.maintimer,'TimerFcn',@updatedata);
+    try; stop(timerfindall); end;
+    try; delete(timerfindall); end;
     
-    handles.Subject.data.data=[];
-    handles.Subject.data.time=[];
-    handles.Subject.data.stimulus=Dictionary;
+    BrainRecordIRApp.MainTimer=timer;
+    set(BrainRecordIRApp.MainTimer,'ExecutionMode','fixedRate');
+    set(BrainRecordIRApp.MainTimer,'Period',.5);
+    set(BrainRecordIRApp.MainTimer,'TimerFcn',@updatedata);
     
-    set(handles.StartButton,'Text','Stop Collection');
-    handles.Drawing.Datahandles=[];
-    cla(handles.progressbar);
-    fill(handles.progressbar,[0 1 1 0],[0 0 1 1],'g');
-    set(handles.progressbar,'XLim',[0 100]);
-    set(handles.BrainRecordIR,'UserData',handles);
-    handles.Instrument=handles.Instrument.sendMLinfo( handles.Subject.data.probe);
-    set(handles.maintimer,'UserData',handles.BrainRecordIR);
-    handles.Instrument.Start();
-    start(handles.maintimer);
+    BrainRecordIRApp.Subject.data=BrainRecordIRApp.Subject.defaultdata;
+    BrainRecordIRApp.Subject.data.data=[];
+    BrainRecordIRApp.Subject.data.time=[];
+    BrainRecordIRApp.Subject.data.stimulus=Dictionary;
+    BrainRecordIRApp.Subject.data(2)=BrainRecordIRApp.Subject.data(1);
+    BrainRecordIRApp.Subject.data(3)=BrainRecordIRApp.Subject.data(1);
+    BrainRecordIRApp.Subject.data(3).probe=BrainRecordIRApp.Realtime.MBLL.probeout;
+    
+    BrainRecordIRApp.StartButton.Text='Stop Collection';
+    BrainRecordIRApp.Drawing.Datahandles=[];
+    cla(BrainRecordIRApp.Progressbar);
+    fill(BrainRecordIRApp.Progressbar,[0 1 1 0],[0 0 1 1],'g');
+    set(BrainRecordIRApp.Progressbar,'XLim',[0 100]);
+   
+    BrainRecordIRApp.UITable.Data={};
+    BrainRecordIRApp.Label_2.Text='0';
+
+    SystemMessage('Starting Instrument');
+    cla(BrainRecordIRApp.MainPlotWindow);
+    BrainRecordIRApp.Device=BrainRecordIRApp.Device.sendMLinfo(BrainRecordIRApp.Subject.defaultdata.probe);
+    BrainRecordIRApp.Device.Start();
+    BrainRecordIRApp.MainTimer.start();
 end
 
 
@@ -83,54 +158,111 @@ return
 
 
 function updatedata(varargin)
-handles=get(get(varargin{1},'userdata'),'userdata');
+global BrainRecordIRApp;
 
-if(handles.Instrument.samples_avaliable>0)
-    [d,t]=handles.Instrument.get_samples(handles.Instrument.samples_avaliable);
-    try
-    handles.Subject.data.data=[handles.Subject.data.data; d];
-    handles.Subject.data.time=[handles.Subject.data.time; t];
 
-    end
-    if(isempty(handles.Drawing.Datahandles))
-        set(handles.BrainRecordIR,'UserData',handles);
-        Update_BrainRecorderAll(handles);
-    else
-        for i=1:length(handles.Drawing.Datahandles)
-            x=get(handles.Drawing.Datahandles(i),'Xdata');
-            y=get(handles.Drawing.Datahandles(i),'Ydata');
-            try
-                set(handles.Drawing.Datahandles(i),'Xdata',[x t'],'Ydata',[y d(:,i)']);
-            end
-            
-        end
-         
-        xlim=[0 t(end)];
-        if(get(handles.windowdatacheck,'value'))
-            v=get(handles.windowdataedit,'value');
-            xlim(1)=max(0,xlim(2)-v);
-        else
-            xlim(1)=0;
-            
-        end
-        lst=find(handles.Subject.data.time>=xlim(1) & handles.Subject.data.time<=xlim(end));
-        
-        set(handles.TabViewsPanel(1),'XLim',xlim);
-        %handles.Drawing.MeasListAct
-        ylim(1)=min(min(handles.Subject.data.data(lst,:)));
-        ylim(2)=max(max(handles.Subject.data.data(lst,:)));
-        if(ylim(1)==ylim(2))
-            ylim(2)=ylim(1)+1;
-        end
-        ylim(1)=floor(ylim(1)/5)*5;
-        ylim(2)=ceil(ylim(2)/5)*5;
-                
-        set(handles.TabViewsPanel(1),'YLim',ylim);
-        
-        n=mod(get(varargin{1},'TasksExecuted'),10);
-        set(handles.progressbar,'XLim',[0 10/(n+1)]);
-    end
-end
- set(handles.BrainRecordIR,'UserData',handles);
+
+try
+
+if(BrainRecordIRApp.Device.samples_avaliable>0)
+    [d,t]=BrainRecordIRApp.Device.get_samples(BrainRecordIRApp.Device.samples_avaliable);
+    % d=f.update(d')';
     
+    
+    BrainRecordIRApp.Subject.data(1).data=[BrainRecordIRApp.Subject.data(1).data; d];
+    BrainRecordIRApp.Subject.data(1).time=[BrainRecordIRApp.Subject.data(1).time; t];
+    
+    for i=1:size(d,1)
+        d1(i,:)=BrainRecordIRApp.Realtime.OpticalDensity.update(d(i,:)')';
+        if(~isempty(BrainRecordIRApp.Realtime.BPF))
+            d1(i,:)=BrainRecordIRApp.Realtime.BPF.update(d1(i,:)')';
+        end
+    end
+    BrainRecordIRApp.Subject.data(2).data=[BrainRecordIRApp.Subject.data(2).data; d1];
+    BrainRecordIRApp.Subject.data(2).time=[BrainRecordIRApp.Subject.data(2).time; t];
+    for i=1:size(d,1)
+        d2(i,:)=BrainRecordIRApp.Realtime.MBLL.update(d1(i,:)')';
+    end
+    BrainRecordIRApp.Subject.data(3).data=[BrainRecordIRApp.Subject.data(3).data; d2];
+    BrainRecordIRApp.Subject.data(3).time=[BrainRecordIRApp.Subject.data(3).time; t];
+    
+    for i=1:size(d,1)
+        so2(i,:)=BrainRecordIRApp.Realtime.SO2.update(d2(i,:)')';
+    end
+    
+    
+end
+
+
+
+
+str=BrainRecordIRApp.SelectDisplayType.Value;
+if(contains(str,'Raw'))
+    selected=1;
+elseif(contains(str,'dOD'))
+    selected=2;
+else
+    selected=3;
+end
+
+if(isempty(BrainRecordIRApp.Drawing.Datahandles))
+    Update_BrainRecorderAll();
+else
+    for i=1:length(BrainRecordIRApp.Drawing.Datahandles)
+        x=get(BrainRecordIRApp.Drawing.Datahandles(i),'Xdata');
+        y=get(BrainRecordIRApp.Drawing.Datahandles(i),'Ydata');
+        
+        if(selected==1)
+            set(BrainRecordIRApp.Drawing.Datahandles(i),'Xdata',[x t'],'Ydata',[y d(:,i)']);
+        elseif(selected==2)
+            set(BrainRecordIRApp.Drawing.Datahandles(i),'Xdata',[x t'],'Ydata',[y d1(:,i)']);
+        else
+            set(BrainRecordIRApp.Drawing.Datahandles(i),'Xdata',[x t'],'Ydata',[y d2(:,i)']);
+        end
+        
+        
+    end
+    
+    xlim=[0 t(end)];
+    if(get(BrainRecordIRApp.WindowDataCheckBox,'value'))
+        v=get(BrainRecordIRApp.WindowDataEditField,'value');
+        xlim(1)=max(0,xlim(2)-v);
+    else
+        xlim(1)=0;
+        
+    end
+    
+    
+    
+    lst=find(BrainRecordIRApp.Subject.data(selected).time>=xlim(1) & BrainRecordIRApp.Subject.data(selected).time<=xlim(end));
+    
+    set(BrainRecordIRApp.MainPlotWindow,'XLim',xlim);
+    %handles.Drawing.MeasListAct
+    ylim(1)=min(min(BrainRecordIRApp.Subject.data(selected).data(lst,:)));
+    ylim(2)=max(max(BrainRecordIRApp.Subject.data(selected).data(lst,:)));
+    if(ylim(1)==ylim(2))
+        ylim(2)=ylim(1)+1;
+    end
+    %     ylim(1)=floor(ylim(1)/5)*5;
+    %     ylim(2)=ceil(ylim(2)/5)*5;
+    
+    set(BrainRecordIRApp.MainPlotWindow,'YLim',ylim);
+    
+    n=mod(get(varargin{1},'TasksExecuted'),10);
+    set(BrainRecordIRApp.Progressbar,'XLim',[0 10/(n+1)]);
+    
+    BrainRecordIRApp.RightSO2EditField.Value=.1*round(1000*so2(end,1));
+    BrainRecordIRApp.LeftSO2EditField.Value=.1*round(1000*so2(end,2));
+    for i=1:2
+        x=get(BrainRecordIRApp.Drawing.Clinical(i),'Xdata');
+        y=get( BrainRecordIRApp.Drawing.Clinical(i),'Ydata');
+        set(BrainRecordIRApp.Drawing.Clinical(i),'Xdata',[x t'],'Ydata',[y 100*so2(:,i)']);
+    end
+    set(BrainRecordIRApp.UIAxesClinicalView,'XLim',xlim);
+    set(BrainRecordIRApp.UIAxesClinicalView,'YLim',[50 100]);
+end
+
+catch
+    Update_BrainRecorderAll();
+end
 return

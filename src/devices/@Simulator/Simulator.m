@@ -18,7 +18,7 @@ classdef Simulator < handle
     methods
         function obj=Simulator
             obj.isrunning=false;
-            obj.sample_rate=10;
+            obj.sample_rate=4;
             obj.nmeas=0;
             obj.timer=timer;
             obj.cnt=0;
@@ -48,6 +48,15 @@ classdef Simulator < handle
            obj.cnt=0;
            obj.isrunning=true;
            obj.data = nirs.testing.simARNoise( obj.probe, [0:30000]/obj.sample_rate);
+           j=nirs.modules.Resample;
+           j.Fs=obj.sample_rate;
+           obj.data=j.run(obj.data);
+           obj.timer=timer;
+           obj.cnt=0;
+           set(obj.timer,'ExecutionMode','fixedRate');
+           set(obj.timer,'Period',1/obj.sample_rate);
+           set(obj.timer,'TimerFcn',@timerfcn);
+           
            start(obj.timer);
        end
        

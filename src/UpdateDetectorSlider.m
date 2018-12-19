@@ -1,14 +1,12 @@
-function UpdateDetectorSlider(handles,hObject)
+function UpdateDetectorSlider(app,event)
 
-value=round(get(hObject,'Value'));
-set(hObject,'Value',value);
+global BrainRecordIRApp;
+app.Value=round(event.Value);
+idx=app.UserData;
 
-det=get(hObject,'UserData');
-set(handles.DetSpinner(det.Optode),'Value',value);
-
-handles.Instrument=handles.Instrument.setDetectorGain(det.Optode,value);
+BrainRecordIRApp.handles.Detectors{idx,3}.Value=app.Value;
 
 
-set(handles.BrainRecordIR,'UserData',handles);
-guidata(handles.BrainRecordIR,handles);
+BrainRecordIRApp.Device.setDetectorGain(idx,app.Value);
+
 return

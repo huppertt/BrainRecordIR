@@ -1,4 +1,7 @@
-function LoadPrevious(handles,hObject)
+function LoadPrevious
+
+global BrainRecordIRApp;
+
 
 [filename, pathname] = uigetfile({'*.nirs';'*.nir5'}, 'Pick a NIRS data file','MultiSelect', 'on');
 if isequal(filename,0) || isequal(pathname,0)
@@ -22,18 +25,12 @@ for i=1:length(filename)
         m(1:end-1)=[];
          raw.probe=raw.probe.register_mesh2probe(m,true);
     end
-    
-    if(~isfield(handles,'file_list_loadedfiles'))
-        handles.file_list_loadedfiles = uitreenode(handles.filelist_loaded,'Text',filename{i},'NodeData',[],'Userdata',raw);
-    else
-        handles.file_list_loadedfiles(end+1) = uitreenode(handles.filelist_loaded,'Text',filename{i},'NodeData',[],'Userdata',raw);
-    end
+    a=uitreenode(BrainRecordIRApp.LoadedFilesNode,'Text',filename{i},'NodeData',[],'Userdata',raw);
+    set(BrainRecordIRApp.Tree,'SelectionChangedFcn',@SelectSaveFile);
+    BrainRecordIRApp.Tree.SelectedNodes=a;
+ 
 end
     
-handles.Subject.data=raw;
-
-
-set(handles.BrainRecordIR,'UserData',handles);
-guidata(handles.BrainRecordIR,handles);
-SelectSaveFile(handles,handles.filelist);    
+BrainRecordIRApp.Subject.data=raw;
+   
 return

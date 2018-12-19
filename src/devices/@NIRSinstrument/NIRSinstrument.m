@@ -2,10 +2,6 @@ classdef NIRSinstrument
   
    
    properties(Hidden = true)
-        laserstates;
-        lasergains;
-        detgains;
-        maxLasers=32*4;
         device;
         type;
         
@@ -20,7 +16,6 @@ classdef NIRSinstrument
    methods
        function obj=NIRSinstrument(type)
            obj.type=type;
-           obj.laserstates=false(obj.maxLasers,1);
        end
        
        function n = get.isrunning(obj)
@@ -37,18 +32,18 @@ classdef NIRSinstrument
        function obj=set.type(obj,type)
            if(strcmp(type,'Simulator'))
                obj.device=Simulator;
+           elseif(strcmp(type,'BTNIRS'))
+               obj.device=BTNIRS;
            else
-            error('unknown type');
+               error('unknown type');
            end
             
        end
        function obj=setLaserState(obj,lIdx,state)
-            obj.laserstates(lIdx)=state;
-            obj.device=obj.device.setLaserState(lIdx,state);
+          obj.device=obj.device.setLaserState(lIdx,state);
        end
    
        function obj=setDetectorGain(obj,dIdx,gain)
-           obj.detgains(dIdx)=gain;
            obj.device=obj.device.setDetectorGain(dIdx,gain);
        end
        

@@ -10,7 +10,7 @@ else
     system.Type = "Simulator";
 end
 
-system.Folders.DefaultData = 'C:\Users\drhup\Desktop\TechEn\Data';
+system.Folders.DefaultData = '/Users/Huppert/Desktop/Data';
 system.Folders.DefaultFileType = {'.nirs','.snirf'};  % the file type that dat will be saved as (can be more then one)
 
 switch(system.Type)

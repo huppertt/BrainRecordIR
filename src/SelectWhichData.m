@@ -1,6 +1,3 @@
-function SelectWhichData(handles,hObject)
+function SelectWhichData()
 
-handles.Drawing.Datahandles=[];
-set(handles.BrainRecordIR,'UserData',handles);
-guidata(handles.BrainRecordIR,handles);
-Update_BrainRecorderAll(handles);
+Update_BrainRecorderAll;
