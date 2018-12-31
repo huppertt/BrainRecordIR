@@ -48,7 +48,7 @@ if(isa(BrainRecordIRApp.Subject.data(selected).probe,'nirs.core.Probe1020'))
             BrainRecordIRApp.Subject.data(selected).probe.defaultdrawfcn='2D';
         case('10-20 View')
             BrainRecordIRApp.Subject.data(selected).probe.defaultdrawfcn='10-20 zoom';
-        case('Brain View')
+        case('3D View')
             BrainRecordIRApp.Subject.data(selected).probe.defaultdrawfcn='3D mesh';
     end
 else
@@ -61,8 +61,8 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
     cla(BrainRecordIRApp.SDGPlotWindow);
     BrainRecordIRApp.Drawing.SDGhandles=BrainRecordIRApp.Subject.data(selected).probe.draw([],[],BrainRecordIRApp.SDGPlotWindow);
     if(strcmp(type2,'10-20 View'))
-        set(BrainRecordIRApp.SDGPlotWindow,'YDir','reverse');
-        set(BrainRecordIRApp.SSDGPlotWindow,'XDir','normal');
+        set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
     elseif(strcmp(type2,'2D View'))
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
         set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');

@@ -32,5 +32,8 @@ for i=1:length(filename)
 end
     
 BrainRecordIRApp.Subject.data=raw;
+
+% turn on the controls on the APP.
+ControlEnable(true);
    
 return

@@ -14,6 +14,9 @@ else
    system=restore_default_settings('Simulator');
 end
 
+% Turn off the controls until a subject is registered.
+ControlEnable(false);
+
 app.SystemType=system.Type;
 
 app.Device=NIRSinstrument(app.SystemType);

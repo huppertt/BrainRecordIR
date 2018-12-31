@@ -87,11 +87,19 @@ else
         BrainRecordIRApp.Realtime.BPF=[];
     end
     
+    link=BrainRecordIRApp.Subject.defaultdata.probe.link;
+    for i=1:height(link)
+        BrainRecordIRApp.Realtime.SNR(i)=SNI;
+        BrainRecordIRApp.Realtime.SNR(i).initfilter;
+    end
     
     
     BrainRecordIRApp.Realtime.OpticalDensity=OpticalDensity;
     BrainRecordIRApp.Realtime.MBLL = MBLL;
     BrainRecordIRApp.Realtime.MBLL.initialize(BrainRecordIRApp.Subject.defaultdata.probe);
+    
+    BrainRecordIRApp.Realtime.GLM = KalmanGLM;
+    BrainRecordIRApp.Realtime.GLM.initfilter(BrainRecordIRApp.Realtime.MBLL.probeout);
     
     BrainRecordIRApp.Realtime.SO2 = CalcSO2;
     
@@ -172,19 +180,42 @@ if(BrainRecordIRApp.Device.samples_avaliable>0)
     BrainRecordIRApp.Subject.data(1).data=[BrainRecordIRApp.Subject.data(1).data; d];
     BrainRecordIRApp.Subject.data(1).time=[BrainRecordIRApp.Subject.data(1).time; t];
     
+    for i=1:size(d,2)
+        SNR(i)=BrainRecordIRApp.Realtime.SNR(i).update(d(:,i));
+    end
+    link=BrainRecordIRApp.Subject.data(1).probe.link;
+    det=unique(link.detector);
+    for i=1:length(det)
+        ss(i)=mean(SNR(find(link.detector==det(i))));
+        if(ss(i)>3)
+            BrainRecordIRApp.handles.Detectors{i,4}.Color=[0 1 0];
+        elseif(ss(i)>1)
+            BrainRecordIRApp.handles.Detectors{i,4}.Color=[.7 1 .7];
+        elseif(ss(i)>.5)
+            BrainRecordIRApp.handles.Detectors{i,4}.Color=[.7 .7 0];
+        else
+            BrainRecordIRApp.handles.Detectors{i,4}.Color=[1 0 0];
+        end
+    end
+    
     for i=1:size(d,1)
         d1(i,:)=BrainRecordIRApp.Realtime.OpticalDensity.update(d(i,:)')';
         if(~isempty(BrainRecordIRApp.Realtime.BPF))
             d1(i,:)=BrainRecordIRApp.Realtime.BPF.update(d1(i,:)')';
         end
     end
+    BrainRecordIRApp.Subject.data(2).stimulus=BrainRecordIRApp.Subject.data(1).stimulus;
     BrainRecordIRApp.Subject.data(2).data=[BrainRecordIRApp.Subject.data(2).data; d1];
     BrainRecordIRApp.Subject.data(2).time=[BrainRecordIRApp.Subject.data(2).time; t];
     for i=1:size(d,1)
         d2(i,:)=BrainRecordIRApp.Realtime.MBLL.update(d1(i,:)')';
     end
+    
+    BrainRecordIRApp.Subject.data(3).stimulus=BrainRecordIRApp.Subject.data(1).stimulus;
     BrainRecordIRApp.Subject.data(3).data=[BrainRecordIRApp.Subject.data(3).data; d2];
     BrainRecordIRApp.Subject.data(3).time=[BrainRecordIRApp.Subject.data(3).time; t];
+    
+    BrainRecordIRApp.Realtime.GLM.update(BrainRecordIRApp.Subject.data(3),t);
     
     for i=1:size(d,1)
         so2(i,:)=BrainRecordIRApp.Realtime.SO2.update(d2(i,:)')';

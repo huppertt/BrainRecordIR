@@ -1,23 +1,20 @@
 function ChangeProbeView(handles,hObject)
 
-type=get(handles.SDGplot_select,'Value');
-for i=1:length(handles.Subject.data)
-    
+global BrainRecordIRApp;
+
+type=BrainRecordIRApp.DrawMode4Probe.Value;
+for i=1:length(BrainRecordIRApp.Subject.data)
     switch(type)
         case('2D View')
-            handles.Subject.data(i).probe.defaultdrawfcn='2D';
+            BrainRecordIRApp.Subject.data(i).probe.defaultdrawfcn='2D';
         case('10-20 View')
-            handles.Subject.data(i).probe.defaultdrawfcn='10-20 zoom';
-        case('Brain View')
-            handles.Subject.data(i).probe.defaultdrawfcn='3D mesh (frontal) zoom';
+            BrainRecordIRApp.Subject.data(i).probe.defaultdrawfcn='10-20 zoom';
+        case('3D View')
+            BrainRecordIRApp.Subject.data(i).probe.defaultdrawfcn='3D mesh (frontal) zoom';
     end
 end
 
 
-handles.Drawing.SDGhandles=[];
-
-set(handles.BrainRecordIR,'UserData',handles);
-guidata(handles.BrainRecordIR,handles);
-
-Update_BrainRecorderAll(handles);
+BrainRecordIRApp.Drawing.SDGhandles=[];
+Update_BrainRecorderAll;
 return
