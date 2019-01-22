@@ -5,12 +5,24 @@ global BrainRecordIRApp;
 vtype = 'tstat';
 Stats=BrainRecordIRApp.UIAxesStatsViewPlot.UserData;
 
+if(isempty(Stats.conditions))
+    return
+end
+
 % Need to make sure variables and link tables are in same order
 Stats=Stats.sorted();
 
 v=Stats.(vtype);
 
 cond=BrainRecordIRApp.ListBoxWhichContrast.Value;
+if(isempty(cond))
+    BrainRecordIRApp.ListBoxWhichContrast.Value=BrainRecordIRApp.ListBoxWhichContrast.Items{1};
+    cond=BrainRecordIRApp.ListBoxWhichContrast.Value;
+end
+
+
+
+    
 if(contains(BrainRecordIRApp.DrawMode4StatsView.Value,'HbO2'))
     lst=find(ismember(Stats.variables.type,'hbo') & ismember(Stats.variables.cond,cond));
 else
@@ -50,7 +62,13 @@ end
 c = colorbar(BrainRecordIRApp.UIAxesStatsViewPlot); 
 colormap(BrainRecordIRApp.UIAxesStatsViewPlot,cmap); 
 caxis(BrainRecordIRApp.UIAxesStatsViewPlot,vrange);
-                
-              
+       
+% lst=find(BrainRecordIRApp.Drawing.MeasListAct);
+% lst=(lst-1)*2+1+1*(~contains(BrainRecordIRApp.DrawMode4StatsView.Value,'HbO2'));
+% HRF=Stats.HRF;
+% cla(BrainRecordIRApp.UIAxes);
+% h=HRF.draw(lst,0,BrainRecordIRApp.UIAxes);
+
+return              
 
 

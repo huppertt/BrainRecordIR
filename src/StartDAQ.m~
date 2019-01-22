@@ -218,11 +218,8 @@ if(BrainRecordIRApp.Device.samples_avaliable>0)
     BrainRecordIRApp.Realtime.GLM.update(BrainRecordIRApp.Subject.data(3),t);
     BrainRecordIRApp.UIAxesStatsViewPlot.UserData=BrainRecordIRApp.Realtime.GLM.Stats;
     
-    if(~isempty(BrainRecordIRApp.UIAxesStatsViewPlot.UserData.conditions))
     set(BrainRecordIRApp.ListBoxWhichContrast,'Items',BrainRecordIRApp.UIAxesStatsViewPlot.UserData.conditions);
-    else
-        set(BrainRecordIRApp.ListBoxWhichContrast,'Items',{});
-    end
+    
     for i=1:size(d,1)
         so2(i,:)=BrainRecordIRApp.Realtime.SO2.update(d2(i,:)')';
     end
@@ -297,9 +294,6 @@ else
     end
     set(BrainRecordIRApp.UIAxesClinicalView,'XLim',xlim);
     set(BrainRecordIRApp.UIAxesClinicalView,'YLim',[50 100]);
-    
-    ChangeProbeViewStats;
-    
 end
 
 catch

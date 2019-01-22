@@ -57,6 +57,10 @@ classdef KalmanGLM < handle
              Stats=nirs.core.ChannelStats;
              Stats.probe=obj.probe;
              
+             if(isempty(obj.conditions))
+                 return
+             end
+             
              beta=zeros(obj.nummeas*length(obj.conditions),1);
              covb=eye(obj.nummeas*length(obj.conditions));
              cnt=1;

@@ -70,6 +70,18 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
         set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
     end
+    
+    if(strcmp(type2,'10-20 View'))
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+    elseif(strcmp(type2,'2D View'))
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
+    else
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+    end
+    
 end
 
 
@@ -151,8 +163,7 @@ if(~isempty(BrainRecordIRApp.UIAxesStatsViewPlot.UserData))
         end
     end
     BrainRecordIRApp.Drawing.StatsHandles=Stats.probe.draw([],[],BrainRecordIRApp.UIAxesStatsViewPlot);
-    BrainRecordIRApp.ListBoxWhichContrast.Items=Stats.conditions;
-    ChangeProbeViewStats;
+     ChangeProbeViewStats;
 end
 
 
