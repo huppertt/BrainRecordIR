@@ -1,7 +1,6 @@
 function Update_BrainRecorderAll(type)
 global BrainRecordIRApp;
 
-
 % TODO-
 str=BrainRecordIRApp.SelectDisplayType.Value;
 if(contains(str,'Raw'))
@@ -56,6 +55,7 @@ else
     set(BrainRecordIRApp.DrawMode4Probe,'Value','2D View');
     set(BrainRecordIRApp.DrawMode4Probe,'Enable','off');
 end
+set(BrainRecordIRApp.SDGPlotWindow,'BackgroundColor','w');
 
 if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SDGhandles') || isempty(BrainRecordIRApp.Drawing.SDGhandles))
     cla(BrainRecordIRApp.SDGPlotWindow);
@@ -63,7 +63,9 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
     if(strcmp(type2,'10-20 View'))
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
         set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
+        
     elseif(strcmp(type2,'2D View'))
+        view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
         set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
     else
@@ -74,9 +76,11 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
     if(strcmp(type2,'10-20 View'))
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
-    elseif(strcmp(type2,'2D View'))
+   elseif(strcmp(type2,'2D View'))
+        view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
+       
     else
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
@@ -152,9 +156,9 @@ if(~isempty(BrainRecordIRApp.UIAxesStatsViewPlot.UserData))
         BrainRecordIRApp.DrawMode4StatsView.Items={'2D HbO2','2D HbR',...
             '10-20 HbO2','10-20 HbR','3D HbO2','3D HbR'};
     end
-    view=BrainRecordIRApp.DrawMode4StatsView.Value;
+    view2=BrainRecordIRApp.DrawMode4StatsView.Value;
     if(isa(Stats.probe,'nirs.core.Probe1020'))
-        if(contains(view,'2D'))
+        if(contains(view2,'2D'))
             Stats.probe.defaultdrawfcn='2D';
         elseif(contains(view,'10-20'))
             Stats.probe.defaultdrawfcn='10-20';

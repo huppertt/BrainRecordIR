@@ -47,6 +47,11 @@ classdef NIRSinstrument
            obj.device=obj.device.setDetectorGain(dIdx,gain);
        end
        
+       function obj=setSrcPower(obj,sIdx,gain)
+           obj.device=obj.device.setSrcPower(sIdx,gain);
+       end
+
+       
        function obj = sendMLinfo(obj,probe)
            obj.device=obj.device.sendMLinfo(probe);
        end

@@ -364,6 +364,13 @@ for i=1:length(Controls);
     end;
 end;
 
-
+if(flag)
+    if(BrainRecordIRApp.handles.Lasers{1,2}.Enable)
+        SrcPwrLim=BrainRecordIRApp.handles.Lasers{1,2}.Limits;
+        SetAllLaserPwr(ceil(sum(SrcPwrLim)/2));
+    end
+    DetPwrLim=BrainRecordIRApp.handles.Detectors{1,2}.Limits;
+    SetAllDetGains(ceil(sum(DetPwrLim)/4));
+end
 
 end

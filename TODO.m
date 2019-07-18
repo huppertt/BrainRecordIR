@@ -6,15 +6,15 @@ QuickSetupMenuSelected
 ShowSNRDetectors.m
 HelpDocumentionMenuSelected
 
- LaserAutoAdjust
- DetAutoAdjust
- ShowDataQuality;
+LaserAutoAdjust
+DetAutoAdjust
+
  
- BPFchanged;  dont allow top exceed nyquist
- MOCOchanged;
- GLMchanged;
+BPFchanged;  dont allow top exceed nyquist
+MOCOchanged;
+GLMchanged;
   
- SampleRateChanged;
- HardWareFiltersChanged;
+SampleRateChanged;
+HardWareFiltersChanged;
  
- Load then run (without registering) crashes
+Load then run (without registering) crashes

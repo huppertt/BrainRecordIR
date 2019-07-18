@@ -38,6 +38,9 @@ classdef Simulator < handle
        function obj=setDetectorGain(obj,dIdx,gain)
            % do nothing
        end
+       function obj = setSrcPower(obj,sIdx,val)
+           % do nothing
+       end
        
        function obj = sendMLinfo(obj,probe)
            obj.nmeas=height(probe.link);

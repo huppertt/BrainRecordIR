@@ -367,10 +367,10 @@ app.handles.Detectors{32,2}=app.SliderD_32;
 app.handles.Detectors{32,3}=app.EditFieldD_32;
 app.handles.Detectors{32,4}=app.LampD_32;
 
-for i=1:size(app.handles.Detectors,1)
-    app.handles.Detectors{i,1}.Title=num2str(i);
-    app.handles.Detectors{i,2}.Limits=[1 255];
-    app.handles.Detectors{i,3}.Limits=[1 255];
+for i=1:length(system.Detectors.Detector2OptodeMapping)
+    app.handles.Detectors{i,1}.Title=num2str(system.Detectors.Detector2OptodeMapping(i).Optode);
+    app.handles.Detectors{i,2}.Limits=system.Detectors.Detector2OptodeMapping(i).Range;
+    app.handles.Detectors{i,3}.Limits=system.Detectors.Detector2OptodeMapping(i).Range;
     app.handles.Detectors{i,3}.Value=1;
     app.handles.Detectors{i,2}.Value=1;
     app.handles.Detectors{i,4}.Color=[.6 .6 .6];
@@ -381,7 +381,21 @@ for i=1:size(app.handles.Detectors,1)
     app.handles.Detectors{i,3}.UserData=i;
     
 end
-
+for i=length(system.Detectors.Detector2OptodeMapping)+1:size(app.handles.Detectors,1)
+    set(app.handles.Detectors{i,1},'visible','off');
+    app.handles.Detectors{i,1}.Title=num2str(i);
+    app.handles.Detectors{i,2}.Limits=[0 255];
+    app.handles.Detectors{i,3}.Limits=[0 255];
+    app.handles.Detectors{i,3}.Value=1;
+    app.handles.Detectors{i,2}.Value=1;
+    app.handles.Detectors{i,4}.Color=[.6 .6 .6];
+    
+    app.handles.Detectors{i,2}.ValueChangedFcn=@UpdateDetectorSlider;
+    app.handles.Detectors{i,3}.ValueChangedFcn=@UpdateDetectorSpinner;
+    app.handles.Detectors{i,2}.UserData=i;
+    app.handles.Detectors{i,3}.UserData=i;
+    
+end
 
 
 

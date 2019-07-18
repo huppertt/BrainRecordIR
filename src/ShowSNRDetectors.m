@@ -1,9 +1,7 @@
-function ShowSNRDetectors(handles,hObject)
+function ShowSNRDetectors
 
-if(isfield(handles,'Subject') && isfield(handles.Subject,'data') && ~isempty(handles.Subject.data.data))
-    data=handles.Subject.data;
-    
-    nirs.reports.channelSummaryPlot(data);
-end
+global BrainRecordIRApp;
+data=BrainRecordIRApp.Subject.data(1);   
+nirs.reports.channelSummaryPlot(data);
 
 return
