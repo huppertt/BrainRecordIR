@@ -12,11 +12,14 @@ hpf=BrainRecordIRApp.HighPassEditField.Value;
 if(lpf>fs/2)
     %nyquist exceeded
     BrainRecordIRApp.LowPassEditField.Value=(fs/2)*.95;
+    BrainRecordIRApp.LowPassEditField.Value=(fs/2)*.95;
+    lpf=BrainRecordIRApp.LowPassEditField.Value;
 end
 
 if(hpf<=0)
     BrainRecordIRApp.HighPassEditField.Value=0;
     BrainRecordIRApp.CheckBox.Value=false;
+    hpf=BrainRecordIRApp.HighPassEditField.Value;
 end
 
 if(lpf<hpf)
