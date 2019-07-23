@@ -12,7 +12,7 @@ end
 
 
 
-system.Folders.DefaultData = '/Users/theodorehuppert/Desktop/NIRS_Data';
+system.Folders.DefaultData = '/Users/huppert/Desktop/BTnirs_Data';
 system.Folders.DefaultFileType = {'.nirs','.snirf'};  % the file type that dat will be saved as (can be more then one)
 
 switch(system.Type)
