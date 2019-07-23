@@ -7,13 +7,17 @@ function system = restore_default_settings(type)
 if(nargin==1)
     system.Type=type;
 else
-    system.Type = "Simulator";
+    system.Type = "BTNIRS";
 end
 
 
-
-system.Folders.DefaultData = '/Users/huppert/Desktop/BTnirs_Data';
-system.Folders.DefaultFileType = {'.nirs','.snirf'};  % the file type that dat will be saved as (can be more then one)
+if(ismac)
+    system.Folders.DefaultData = '/Users/huppert/Desktop/BTnirs_Data';
+else
+    un=getenv('UserName');
+   system.Folders.DefaultData = fullfile('C:','Users',un,'Desktop','BTNIRS_data'); 
+end
+    system.Folders.DefaultFileType = {'.nirs','.snirf'};  % the file type that dat will be saved as (can be more then one)
 
 switch(system.Type)
     case('Simulator')

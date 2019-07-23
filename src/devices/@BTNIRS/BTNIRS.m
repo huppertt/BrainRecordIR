@@ -20,7 +20,7 @@ classdef BTNIRS < handle
         
         numsrc=8;
         numdet=8;
-        SPbuffersize = 1024*1024;   % serial port buffer size 1 meg byte
+        SPbuffersize = 1024; %*1024;   % serial port buffer size 1 meg byte
         WordsPerRecord = 5+64+11; % 2 srcs X 4 dets X 2 sides (=32) + 2.5 Header + 5.5 Trailing ***"16-bitWORDS"
         
         DAQMeasList =table;
@@ -39,9 +39,12 @@ classdef BTNIRS < handle
              for i=1:length(in); fclose(in(i)); end;
             
             %% intialize to the serial port
-            x=1;
-            b = sprintf('%s%d','COM',x);
-            b='/dev/cu.Dual-SPP-SerialPort';
+            if(ispc)
+                 answer=inputdlg('Which COM Port?','COM',1,{'1'});
+                b = sprintf('%s%s','COM',answer{1});
+            else
+                b='/dev/cu.Dual-SPP-SerialPort';
+            end
             obj.serialport=serial(b);
             
             set(obj.serialport, 'FlowControl', 'none');
@@ -50,7 +53,7 @@ classdef BTNIRS < handle
             set(obj.serialport, 'DataBits', 8);
             set(obj.serialport, 'StopBit', 1);
             set(obj.serialport, 'Timeout',10);           
-            set(obj.serialport,'byteorder','littleendian');
+           % set(obj.serialport,'byteorder','littleendian');
 
 
 
