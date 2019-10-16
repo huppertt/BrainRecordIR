@@ -42,26 +42,41 @@ classdef BTNIRS < handle
             
             %% intialize to the serial port
             if(ispc)
-                 answer=inputdlg('Which COM Port?','COM',1,{'1'});
-                b = sprintf('%s%s','COM',answer{1});
+                cnt=1;
+                int=instrfind;
+                for i=1:length(int)
+                    try
+                        obj.serialport=int(i);
+                        
+                        set(obj.serialport, 'FlowControl', 'none');
+                        set(obj.serialport, 'BaudRate', 115200);
+                        set(obj.serialport, 'Parity', 'none');
+                        set(obj.serialport, 'DataBits', 8);
+                        set(obj.serialport, 'StopBit', 1);
+                        set(obj.serialport, 'Timeout',10);
+                         set(obj.serialport, 'InputBufferSize',obj.SPbuffersize); %number of bytes in input buffer
+                        fopen(obj.serialport);
+                        break;
+                    end
+                end
             else
-                b='/dev/cu.Dual-SPP-SerialPort';
+                
+                b=dir('/dev/cu.Dual-SPP-SerialPort*');
+                obj.serialport=serial(b(1).name);
+                set(obj.serialport, 'FlowControl', 'none');
+                set(obj.serialport, 'BaudRate', 115200);
+                set(obj.serialport, 'Parity', 'none');
+                set(obj.serialport, 'DataBits', 8);
+                set(obj.serialport, 'StopBit', 1);
+                set(obj.serialport, 'Timeout',10);
+                
+            fopen(obj.serialport);
             end
-            obj.serialport=serial(b);
-            
-            set(obj.serialport, 'FlowControl', 'none');
-            set(obj.serialport, 'BaudRate', 115200);
-            set(obj.serialport, 'Parity', 'none');
-            set(obj.serialport, 'DataBits', 8);
-            set(obj.serialport, 'StopBit', 1);
-            set(obj.serialport, 'Timeout',10);           
+                 
            % set(obj.serialport,'byteorder','littleendian');
 
 
-
-            
-            set(obj.serialport, 'InputBufferSize',obj.SPbuffersize); %number of bytes in input buffer
-            fopen(obj.serialport);
+           
             
             % make sure all the default settings are ok
             obj.laserstate=false(obj.numsrc,1);
@@ -94,7 +109,7 @@ classdef BTNIRS < handle
         
         
         function n= get.info(obj)
-            n='Connected: TechEn BTNIRS';
+            n=['Connected: TechEn BTNIRS ' obj.serialport.name];
         end
         
         %% laser states

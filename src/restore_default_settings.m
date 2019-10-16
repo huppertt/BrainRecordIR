@@ -12,7 +12,7 @@ end
 
 
 
-system.Folders.DefaultData = '/Users/theodorehuppert/Desktop/NIRS_Data';
+system.Folders.DefaultData = 'C:\Users\CW_TECHEN\Desktop\BTnirs_data';
 system.Folders.DefaultFileType = {'.nirs'};  % the file type that dat will be saved as (can be more then one)
 
 switch(system.Type)
@@ -63,7 +63,7 @@ switch(system.Type)
         system.SampleRatesDefault = 5;
         
         system.ClassLibrary = 'Instrument.Simulator';
-         case('BTNIRS')
+    case('BTNIRS')
         
         % the list laser to optode and wavelength info
         % this gives the freedom to use any combination of wavelengths (or numbers
