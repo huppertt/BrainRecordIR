@@ -270,13 +270,32 @@ else
     end
     
     
-    
-    lst=find(BrainRecordIRApp.Subject.data(selected).time>=xlim(1) & BrainRecordIRApp.Subject.data(selected).time<=xlim(end));
+    link=BrainRecordIRApp.Subject.data(selected).probe.link;
+     str=BrainRecordIRApp.SelectDisplayType.Value;
+   if(selected==3)
+        type=cellstr(str(strfind(str,':')+2:end));
+   elseif(contains(str,'HRF'))
+       type=cellstr(str(strfind(str,':')+2:end));
+    else
+        type=str2double(str(strfind(str,':')+1:end-2));
+   end
+   
+   lstNull=~ismember(link.type,type);
+   lstGood=find(ismember(link.type,type));
+   link(lstNull,:)=[];
+   
+   if(BrainRecordIRApp.AutoscaleYaxisCheckBox.Value)
+       lst2=find(ismember(BrainRecordIRApp.Subject.data(selected).probe.link,link(BrainRecordIRApp.Drawing.MeasListAct,:)));
+   else
+       lst2=1:height(link);
+   end
+   
+   lst=find(BrainRecordIRApp.Subject.data(selected).time>=xlim(1) & BrainRecordIRApp.Subject.data(selected).time<=xlim(end));
     
     set(BrainRecordIRApp.MainPlotWindow,'XLim',xlim);
     %handles.Drawing.MeasListAct
-    ylim(1)=min(min(BrainRecordIRApp.Subject.data(selected).data(lst,:)));
-    ylim(2)=max(max(BrainRecordIRApp.Subject.data(selected).data(lst,:)));
+    ylim(1)=min(min(BrainRecordIRApp.Subject.data(selected).data(lst,lst2)));
+    ylim(2)=max(max(BrainRecordIRApp.Subject.data(selected).data(lst,lst2)));
     if(ylim(1)==ylim(2))
         ylim(2)=ylim(1)+1;
     end
@@ -288,16 +307,17 @@ else
     n=mod(get(varargin{1},'TasksExecuted'),10);
     set(BrainRecordIRApp.Progressbar,'XLim',[0 10/(n+1)]);
     
-    BrainRecordIRApp.RightSO2EditField.Value=.1*round(1000*so2(end,1));
-    BrainRecordIRApp.LeftSO2EditField.Value=.1*round(1000*so2(end,2));
-    for i=1:2
-        x=get(BrainRecordIRApp.Drawing.Clinical(i),'Xdata');
-        y=get( BrainRecordIRApp.Drawing.Clinical(i),'Ydata');
-        set(BrainRecordIRApp.Drawing.Clinical(i),'Xdata',[x t'],'Ydata',[y 100*so2(:,i)']);
+    try
+        BrainRecordIRApp.RightSO2EditField.Value=.1*round(1000*so2(end,1));
+        BrainRecordIRApp.LeftSO2EditField.Value=.1*round(1000*so2(end,2));
+        for i=1:2
+            x=get(BrainRecordIRApp.Drawing.Clinical(i),'Xdata');
+            y=get( BrainRecordIRApp.Drawing.Clinical(i),'Ydata');
+            set(BrainRecordIRApp.Drawing.Clinical(i),'Xdata',[x t'],'Ydata',[y 100*so2(:,i)']);
+        end
+        set(BrainRecordIRApp.UIAxesClinicalView,'XLim',xlim);
+        set(BrainRecordIRApp.UIAxesClinicalView,'YLim',[50 100]);
     end
-    set(BrainRecordIRApp.UIAxesClinicalView,'XLim',xlim);
-    set(BrainRecordIRApp.UIAxesClinicalView,'YLim',[50 100]);
-    
     ChangeProbeViewStats;
     
 end

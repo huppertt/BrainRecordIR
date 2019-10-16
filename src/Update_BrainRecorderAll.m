@@ -5,25 +5,35 @@ global BrainRecordIRApp;
 str=BrainRecordIRApp.SelectDisplayType.Value;
 if(contains(str,'Raw'))
     selected=1;
+    str2=' [unfiltered]';
 elseif(contains(str,'dOD'))
     selected=2;
+    str2=' [filtered]';
 elseif(contains(str,'HRF'))
     selected=1;
+     str2=' [filtered]';
 else
     selected=3;
+     str2=' [filtered]';
 end
-
 
 
 if(nargin<1)
    if(selected==3)
         type=cellstr(str(strfind(str,':')+2:end));
+       
    elseif(contains(str,'HRF'))
        type=cellstr(str(strfind(str,':')+2:end));
+       
     else
         type=str2double(str(strfind(str,':')+1:end-2));
+         
     end
 end
+
+
+set(BrainRecordIRApp.Raw690nmunfilteredLabel,'Text',[str str2]);
+set(BrainRecordIRApp.Raw690nmunfilteredLabel,'FontWeight','bold');
 
 % use try/catch blocks here to handle any possible reasons why the 
 % drawings may be messed up and reset
@@ -43,7 +53,7 @@ end
 type2=BrainRecordIRApp.DrawMode4Probe.Value;
 if(isa(BrainRecordIRApp.Subject.data(selected).probe,'nirs.core.Probe1020'))
     switch(type2)
-        case('2D View')
+        case('Flat View')
             BrainRecordIRApp.Subject.data(selected).probe.defaultdrawfcn='2D';
         case('10-20 View')
             BrainRecordIRApp.Subject.data(selected).probe.defaultdrawfcn='10-20 zoom';
@@ -141,10 +151,12 @@ if(isa(BrainRecordIRApp.Subject.data(selected).probe,'nirs.core.Probe1020'))
     set(BrainRecordIRApp.DrawMode4Probe,'Enable','on');
 end
 
-cla(BrainRecordIRApp.UIAxesClinicalView); hold(BrainRecordIRApp.UIAxesClinicalView,'on');
-BrainRecordIRApp.Drawing.Clinical(1)=plot(BrainRecordIRApp.UIAxesClinicalView,-10,0,'g');
-BrainRecordIRApp.Drawing.Clinical(2)=plot(BrainRecordIRApp.UIAxesClinicalView,-10,0,'g');
 
+try
+    cla(BrainRecordIRApp.UIAxesClinicalView); hold(BrainRecordIRApp.UIAxesClinicalView,'on');
+    BrainRecordIRApp.Drawing.Clinical(1)=plot(BrainRecordIRApp.UIAxesClinicalView,-10,0,'g');
+    BrainRecordIRApp.Drawing.Clinical(2)=plot(BrainRecordIRApp.UIAxesClinicalView,-10,0,'g');
+end
 
 if(~isempty(BrainRecordIRApp.UIAxesStatsViewPlot.UserData))
     cla(BrainRecordIRApp.UIAxesStatsViewPlot);

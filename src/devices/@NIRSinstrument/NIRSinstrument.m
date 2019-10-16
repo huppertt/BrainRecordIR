@@ -10,6 +10,8 @@ classdef NIRSinstrument
        samples_avaliable;
        isrunning;
        sample_rate;
+       isconnected;
+       info;
    end
    
    
@@ -17,6 +19,13 @@ classdef NIRSinstrument
        function obj=NIRSinstrument(type)
            obj.type=type;
        end
+       
+        function n= get.isconnected(obj)
+            n=obj.device.isconnected;
+        end
+           function n= get.info(obj)
+            n=obj.device.info;
+        end
        
        function n = get.isrunning(obj)
            n=obj.device.isrunning;

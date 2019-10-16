@@ -6,6 +6,8 @@ classdef BTNIRS < handle
     end
     properties( Dependent = true )
         samples_avaliable;
+        isconnected;
+        info;
     end
     
     
@@ -87,6 +89,11 @@ classdef BTNIRS < handle
             obj.DAQMeasList=table(source,detector,type,byte1,byte2);
         end
         
+        
+        function n= get.info(obj)
+            n='Connected: TechEn BTNIRS';
+        end
+        
         %% laser states
         function obj=setLaserState(obj,lIdx,state)
             if(lIdx<1 || lIdx>obj.numsrc)
@@ -117,11 +124,11 @@ classdef BTNIRS < handle
         
         %% detector gains
         function obj=setDetectorGain(obj,dIdx,gain)
-            if(dIdx<1 || dIdx>obj.numdet)
+            if(min(dIdx)<1 || max(dIdx)>obj.numdet)
                 return
             end
-            gain=max(min(gain,127),1);  % must be between 1-127
-            fprintf(obj.serialport, sprintf('SDG %d %2d\r',dIdx,gain));%\n
+            gain=127-max(min(gain,127),1);  % must be between 1-127
+            fprintf(obj.serialport, sprintf('SDG %d %2d\r',dIdx(1),gain));%\n
             obj.detgains(dIdx)=gain;
             pause(0.1);
         end
@@ -152,6 +159,9 @@ classdef BTNIRS < handle
             
         end
         
+        function n= get.isconnected(obj)
+            n=true;
+        end
         
         function n = get.samples_avaliable(obj)
             n=floor(get(obj.serialport,'BytesAvailable')/obj.WordsPerRecord);

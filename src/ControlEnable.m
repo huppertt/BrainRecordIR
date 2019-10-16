@@ -349,7 +349,8 @@ Controls={
     'RunAnalysisButton            '
     'SampleRateDropDownLabel      '
     'SampleRateDropDown           '
-    'ApplyHardwarefiltersCheckBox '};
+    'ApplyHardwarefiltersCheckBox '
+    'AutoscaleYaxisCheckBox'};
 
 for i=1:length(Controls);
     try;

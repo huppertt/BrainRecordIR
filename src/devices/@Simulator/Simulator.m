@@ -5,6 +5,8 @@ classdef Simulator < handle
     end
     properties( Dependent = true )
         samples_avaliable;
+        isconnected;
+        info;
     end
     
     
@@ -26,6 +28,14 @@ classdef Simulator < handle
             set(obj.timer,'Period',1/obj.sample_rate);
             set(obj.timer,'TimerFcn',@timerfcn);
              
+        end
+        
+         function n= get.info(obj)
+            n='Connected: Data Simulator';
+        end
+        
+         function n= get.isconnected(obj)
+            n=true;
         end
                    
         function n = get.samples_avaliable(obj)

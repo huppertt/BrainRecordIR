@@ -7,13 +7,13 @@ function system = restore_default_settings(type)
 if(nargin==1)
     system.Type=type;
 else
-    system.Type = "Simulator";
+    system.Type = "BTNIRS";
 end
 
 
 
 system.Folders.DefaultData = '/Users/theodorehuppert/Desktop/NIRS_Data';
-system.Folders.DefaultFileType = {'.nirs','.snirf'};  % the file type that dat will be saved as (can be more then one)
+system.Folders.DefaultFileType = {'.nirs'};  % the file type that dat will be saved as (can be more then one)
 
 switch(system.Type)
     case('Simulator')
@@ -81,16 +81,16 @@ switch(system.Type)
         system.Lasers.Adjustable = true;
         system.Lasers.GainRange = [0 100];
         
-        system.Detectors.Detector2OptodeMapping(1)=struct('Optode',1,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(2)=struct('Optode',2,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(3)=struct('Optode',3,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(4)=struct('Optode',4,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(5)=struct('Optode',5,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(6)=struct('Optode',6,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(7)=struct('Optode',7,'short_seperation',false,'Range',[0 127]);
-        system.Detectors.Detector2OptodeMapping(8)=struct('Optode',8,'short_seperation',false,'Range',[0 127]);
+        system.Detectors.Detector2OptodeMapping(1)=struct('Optode',[1:4],'short_seperation',false,'Range',[0 127]);
+        system.Detectors.Detector2OptodeMapping(2)=struct('Optode',[5:8],'short_seperation',false,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(3)=struct('Optode',3,'short_seperation',false,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(4)=struct('Optode',4,'short_seperation',false,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(5)=struct('Optode',5,'short_seperation',false,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(6)=struct('Optode',6,'short_seperation',true,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(7)=struct('Optode',7,'short_seperation',false,'Range',[0 127]);
+%         system.Detectors.Detector2OptodeMapping(8)=struct('Optode',8,'short_seperation',false,'Range',[0 127]);
         
-        system.SampleRatesAllowed = [10 40 80];
+        system.SampleRatesAllowed = [10:10:80];
         system.SampleRatesDefault = 10;
         
         system.ClassLibrary = 'Instrument.BTNIRS'; 

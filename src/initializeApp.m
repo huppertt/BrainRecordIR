@@ -7,8 +7,7 @@ global BrainRecordIRApp;
 folder=fileparts(which('BrainRecordIR.mlapp'));
 if(exist(fullfile(folder,'System.config'),'file'))
     system=[];
-    load(fullfile(folder,'System.config'),'-MAT');
-   
+    load(fullfile(folder,'System.config'),'-MAT');   
 else
    disp('Default configuration not found: restoring');
    system=restore_default_settings('Simulator');
@@ -24,14 +23,19 @@ app.Device=NIRSinstrument(app.SystemType);
 
 %% TODO-  change to allow enum selection based on instrument
 fs=[num2str(app.Device.sample_rate) 'Hz'];
-BrainRecordIRApp.SampleRateDropDown.Items={fs};
+
+for i=1:length(system.SampleRatesAllowed)
+    fs2{i}=[num2str(system.SampleRatesAllowed(i)) 'Hz'];
+end
+
+BrainRecordIRApp.SampleRateDropDown.Items=fs2;
 BrainRecordIRApp.SampleRateDropDown.Value=fs;
 
 if(strcmp(system.Type,'Simulator'))
     comport='-------';
 elseif((strcmp(system.Type,'Simulator')) | (strcmp(system.Type,'CW6')) | (strcmp(system.Type,'Cw7')))
     if(ismac)
-        c=dir('/dev/cu.usbserial-*');
+        c=dir('/dev/cu.Dual-SPP-SerialPort*');
         if(~isempty(c))
             comport=c(1).name;
         else
@@ -377,8 +381,8 @@ for i=1:length(system.Detectors.Detector2OptodeMapping)
     
     app.handles.Detectors{i,2}.ValueChangedFcn=@UpdateDetectorSlider;
     app.handles.Detectors{i,3}.ValueChangedFcn=@UpdateDetectorSpinner;
-    app.handles.Detectors{i,2}.UserData=i;
-    app.handles.Detectors{i,3}.UserData=i;
+    app.handles.Detectors{i,2}.UserData=[i; system.Detectors.Detector2OptodeMapping(i).Optode(:)];
+    app.handles.Detectors{i,3}.UserData=[i; system.Detectors.Detector2OptodeMapping(i).Optode(:)];
     
 end
 for i=length(system.Detectors.Detector2OptodeMapping)+1:size(app.handles.Detectors,1)
@@ -392,8 +396,8 @@ for i=length(system.Detectors.Detector2OptodeMapping)+1:size(app.handles.Detecto
     
     app.handles.Detectors{i,2}.ValueChangedFcn=@UpdateDetectorSlider;
     app.handles.Detectors{i,3}.ValueChangedFcn=@UpdateDetectorSpinner;
-    app.handles.Detectors{i,2}.UserData=i;
-    app.handles.Detectors{i,3}.UserData=i;
+    app.handles.Detectors{i,2}.UserData=[i; NaN];
+    app.handles.Detectors{i,3}.UserData=[i; NaN];
     
 end
 
@@ -401,7 +405,7 @@ end
 
 % TO DO-  set default sample rate
 
-
+delete(app.ClinicalViewTab);
 
 
 return
