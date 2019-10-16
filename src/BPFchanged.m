@@ -9,7 +9,7 @@ BrainRecordIRApp.Realtime.BPF = BPF;
 lpf=BrainRecordIRApp.LowPassEditField.Value;
 hpf=BrainRecordIRApp.HighPassEditField.Value;
 
-if(lpf>fs/2)
+if(lpf>=fs/2)
     %nyquist exceeded
     BrainRecordIRApp.LowPassEditField.Value=(fs/2)*.95;
     BrainRecordIRApp.LowPassEditField.Value=(fs/2)*.95;

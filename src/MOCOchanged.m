@@ -1,4 +1,3 @@
-function MOCOchanged(varargin)
-% TODO
+function MOCOchanged()
 
 end

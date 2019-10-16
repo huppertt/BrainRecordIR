@@ -10,7 +10,7 @@ if(exist(fullfile(folder,'System.config'),'file'))
     load(fullfile(folder,'System.config'),'-MAT');   
 else
    disp('Default configuration not found: restoring');
-   system=restore_default_settings('Simulator');
+   system=restore_default_settings;
 end
 
 % Turn off the controls until a subject is registered.
