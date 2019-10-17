@@ -3,14 +3,13 @@ classdef BTNIRS < handle
     properties
         sample_rate;
         isrunning;
-        comport; 
-        battery;
+        comport;
     end
     properties( Dependent = true )
         samples_avaliable;
         isconnected;
         info;
-      
+        battery;
     end
     
     
@@ -130,7 +129,6 @@ classdef BTNIRS < handle
             type=      [1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2 1 1 2 2]';
             type(type==1)=735; type(type==2)=850;
             obj.DAQMeasList=table(source,detector,type,byte1,byte2);
-            obj=obj.updatebattery;
         end
         
         
@@ -138,6 +136,9 @@ classdef BTNIRS < handle
             n=['Connected: TechEn BTNIRS ' obj.serialport.name];
         end
         
+        function n = get.battery(obj)
+            n=obj.battery;
+        end
         
         function set.sample_rate(obj,Fs)
             if(ismember(round(Fs),[10:10:80]))
@@ -220,7 +221,7 @@ classdef BTNIRS < handle
             
         end
         
-        function obj=updatebattery(obj)
+        function updatebattery(obj)
             fprintf(obj.serialport, sprintf('BAT\r'));%\n
             idn = fscanf(obj.serialport);
             bat=dec2bin(double(idn(1)));

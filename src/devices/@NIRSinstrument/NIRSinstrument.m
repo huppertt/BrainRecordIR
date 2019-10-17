@@ -10,10 +10,11 @@ classdef NIRSinstrument
    properties( Dependent = true )
        samples_avaliable;
        isrunning;
-        sample_rate;
+       sample_rate;
        isconnected;
        info;
        comport;
+       battery;
    end
    
    
@@ -25,6 +26,12 @@ classdef NIRSinstrument
         function n= get.isconnected(obj)
             n=obj.device.isconnected;
         end
+        
+        
+        function n= get.battery(obj)
+            n=obj.device.battery;
+        end
+        
            function n= get.info(obj)
             n=obj.device.info;
         end

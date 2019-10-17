@@ -3,11 +3,13 @@ classdef Simulator < handle
         sample_rate;
         isrunning;
         comport;
+         battery;
     end
     properties( Dependent = true )
         samples_avaliable;
         isconnected;
         info;
+       
     end
     
     
@@ -26,6 +28,7 @@ classdef Simulator < handle
             obj.nmeas=0;
             obj.timer=timer;
             obj.cnt=0;
+            obj.battery=100;
             set(obj.timer,'ExecutionMode','fixedRate');
             set(obj.timer,'Period',1/obj.sample_rate);
             set(obj.timer,'TimerFcn',@timerfcn);

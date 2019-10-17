@@ -1,19 +1,24 @@
 <deployment-project plugin="plugin.ezdeploy" plugin-version="1.0">
-  <configuration build-checksum="2867545698" file="C:\Users\NIRS\Desktop\BrainRecordIR\BrainRecordIR.prj" location="C:\Users\NIRS\Desktop\BrainRecordIR" name="BrainRecordIR" preferred-package-location="C:\Users\NIRS\Desktop\BrainRecordIR\BrainRecordIR\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
+  <configuration build-checksum="976371170" file="C:\Users\CW_TECHEN\Desktop\brainrecordir\BrainRecordIR.prj" location="C:\Users\CW_TECHEN\Desktop\brainrecordir" name="BrainRecordIR" preferred-package-location="C:\Users\CW_TECHEN\Desktop\brainrecordir\BrainRecordIR\for_redistribution" preferred-package-type="package.type.exe" target="target.ezdeploy.standalone" target-name="Application Compiler">
     <param.appname>BrainRecordIR</param.appname>
-    <param.icon />
-    <param.icons />
-    <param.version>1.0</param.version>
+    <param.icon>${PROJECT_ROOT}\BrainRecordIR_resources\icon.ico</param.icon>
+    <param.icons>
+      <file>${PROJECT_ROOT}\BrainRecordIR_resources\icon_48.png</file>
+      <file>${PROJECT_ROOT}\BrainRecordIR_resources\icon_32.png</file>
+      <file>${PROJECT_ROOT}\BrainRecordIR_resources\icon_24.png</file>
+      <file>${PROJECT_ROOT}\BrainRecordIR_resources\icon_16.png</file>
+    </param.icons>
+    <param.version>1.2</param.version>
     <param.authnamewatermark>Ted Huppert</param.authnamewatermark>
-    <param.email>huppert1@pitt.edu</param.email>
-    <param.company />
-    <param.summary />
-    <param.description />
-    <param.screenshot />
+    <param.email>dr.huppert@gmail.com</param.email>
+    <param.company>TechEn Inc</param.company>
+    <param.summary>Fuctional NIRS data recording software for TechEn systems</param.summary>
+    <param.description>This is a compiled Matlab APP to control the TechEn bluetooth, wireless, and Cw6/7 instruments.</param.description>
+    <param.screenshot>C:\Users\CW_TEC~1\AppData\Local\Temp\pt3ewy2k.bmp</param.screenshot>
     <param.guid />
-    <param.installpath.string>\BrainRecordIR\</param.installpath.string>
+    <param.installpath.string>\TechEn Inc\BrainRecordIR\</param.installpath.string>
     <param.installpath.combo>option.installpath.programfiles</param.installpath.combo>
-    <param.logo />
+    <param.logo>C:\Users\CW_TEC~1\AppData\Local\Temp\6t63haax.bmp</param.logo>
     <param.install.notes />
     <param.target.install.notes />
     <param.intermediate>${PROJECT_ROOT}\BrainRecordIR\for_testing</param.intermediate>
@@ -31,8 +36,8 @@
     <param.package.mcr.name>MyAppInstaller_mcr</param.package.mcr.name>
     <param.no.mcr.name>MyAppInstaller_app</param.no.mcr.name>
     <param.windows.command.prompt>false</param.windows.command.prompt>
-    <param.create.log>false</param.create.log>
-    <param.log.file />
+    <param.create.log>true</param.create.log>
+    <param.log.file>BrainRecordIR.log</param.log.file>
     <param.native.matlab>false</param.native.matlab>
     <param.checkbox>false</param.checkbox>
     <param.example />
@@ -43,19 +48,10 @@
 	 -?  print help on how to use the application 
 	 input arguments</param.help.text>
     <unset>
-      <param.icon />
-      <param.icons />
-      <param.version />
-      <param.authnamewatermark />
-      <param.email />
       <param.company />
-      <param.summary />
-      <param.description />
-      <param.screenshot />
       <param.guid />
       <param.installpath.string />
       <param.installpath.combo />
-      <param.logo />
       <param.install.notes />
       <param.target.install.notes />
       <param.intermediate />
@@ -72,8 +68,6 @@
       <param.web.mcr.name />
       <param.package.mcr.name />
       <param.no.mcr.name />
-      <param.create.log />
-      <param.log.file />
       <param.native.matlab />
       <param.checkbox />
       <param.example />
@@ -83,12 +77,14 @@
     </fileset.main>
     <fileset.resources>
       <file>${PROJECT_ROOT}\NIRS_spectra.mat</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\spectra.mat</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+registration\+Colin27\ColinBEM.mat</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\cbrewer\cbrewer.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\cbrewer\colorbrewer.mat</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\AbstractGLM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+registration\+Colin27\ColinBEM.mat</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\cbrewer\cbrewer.m</file>
     </fileset.resources>
-    <fileset.package />
+    <fileset.package>
+      <file>${PROJECT_ROOT}\NIRS_spectra.mat</file>
+      <file>${PROJECT_ROOT}\System.config</file>
+    </fileset.package>
     <fileset.depfun>
       <file>${PROJECT_ROOT}\src\AddStimComment.m</file>
       <file>${PROJECT_ROOT}\src\AddStimEvent.m</file>
@@ -120,12 +116,14 @@
       <file>${PROJECT_ROOT}\src\realtime\SNI.m</file>
       <file>${PROJECT_ROOT}\src\RegisterSubject.mlapp</file>
       <file>${PROJECT_ROOT}\src\restore_default_settings.m</file>
+      <file>${PROJECT_ROOT}\src\SampleRateChanged.m</file>
       <file>${PROJECT_ROOT}\src\SelectSaveFile.m</file>
       <file>${PROJECT_ROOT}\src\SelectWhichData.m</file>
       <file>${PROJECT_ROOT}\src\SetAllDetGains.m</file>
       <file>${PROJECT_ROOT}\src\SetAllLaserPwr.m</file>
       <file>${PROJECT_ROOT}\src\ShowSNRDetectors.m</file>
       <file>${PROJECT_ROOT}\src\ShutdownNIRS.m</file>
+      <file>${PROJECT_ROOT}\src\SplashScreen-v1p1\SplashScreen.m</file>
       <file>${PROJECT_ROOT}\src\StartDAQ.m</file>
       <file>${PROJECT_ROOT}\src\SystemMessage.m</file>
       <file>${PROJECT_ROOT}\src\Update_BrainRecorderAll.m</file>
@@ -133,280 +131,281 @@
       <file>${PROJECT_ROOT}\src\UpdateDetectorSpinner.m</file>
       <file>${PROJECT_ROOT}\src\UpdateSourceSpinner.m</file>
       <file>${PROJECT_ROOT}\src\UpdateSourceToggle.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ChannelStats.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\draw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ftest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\jointTest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\printAll.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\transformNames.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ttest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+core\@Data\Data.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+eeg\+design\extractERP.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\ChannelFStats.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\draw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\printAll.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ChannelStats.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\draw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ftest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\gui.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\jointTest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\printAll.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\transformNames.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ttest.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Data\Data.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Data\gui.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Data\private\updatewin.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@GenericData\GenericData.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Image\Image.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Mesh\Mesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Probe1020\Probe1020.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Probe\draw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@Probe\Probe.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+core\@ProbeROI\ProbeROI.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\boundparam.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\nonlinearHRF.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\unboundparam.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\Canonical.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\FIR.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+basis\Gamma.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\+trend\constant.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\@StimulusEvents\StimulusEvents.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\@StimulusVector\StimulusVector.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\contrastvector.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\createDesignMatrix.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\createMultiVarDesignMat.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\extractHRF.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\mergeStims.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+design\vector2event.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@ApproxSlab\ApproxSlab.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\getConfig.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\jacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\MCXLab.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\measurement.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\saveFluence.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\spectralJacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\timeResolvedMeas.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\bemdata_stnd_PreK.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\getNirfastMeshes.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\jacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\measurement.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\NirfastBEM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\precomputeK.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\getNirfastMeshes.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\jacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\measurement.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\NirfastFEM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+io\loadDotNirs.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+io\loadNIR5.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+io\saveDotNirs.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+io\saveNIR5.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\nlinfit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statjacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statrobustsigma.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statrobustwfun.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\ar_fit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\ar_irls.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\fdr.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\fitlme.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\infocrit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\lagmatrix.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\MDC.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\mv_ar_irls.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\mysvd.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\robust_ar_fit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\robustfit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+math\stepwise.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\+tissues\brain.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\+tissues\skin.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\@OpticalProp\OpticalProp.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\@SpectralProp\SpectralProp.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+media\getspectra.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\AbstractGLM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\AbstractModule.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\AddShortSeperationRegressors.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\AR_IRLS.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\Assert.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\BeerLambertLaw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\GLM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\KeepStims.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\MixedEffects.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\MultiVarGLM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\NIRS_SPM_GLM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\nonlin_GLM.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\OLS.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\OpticalDensity.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\pipelineToList.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\RemoveShortSeperations.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+modules\Resample.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+registration\cp2tform.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+reports\channelSummaryPlot.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+testing\randStimDesign.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+testing\simARNoise.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+testing\simData.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\combine_demographics.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\convertStimDesignStruct.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\createDictionaryFromToolset.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\fixnan.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\flushstdout.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\hasshortdistances.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\hdf5clearfield.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\hdf5getnames.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\list_1020pts.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\makeSDcolors.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\plotmesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\probe2sd.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\register_headsize.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\roiAverage.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\ROIhelper.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\rotateview.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\sd2probe.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\sortrows.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\spheremesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\uniquerows.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\+util\verify_formula.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\createDemographicsTable.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\+nirs\getStimNames.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\cbrewer\interpolate_cbrewer.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\cbrewer\plot_brewer_cmap.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\cylinder2P.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\DataHash.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\Dictionary\Dictionary.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\fileexchange\icp.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\bbxflatsegment.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\binsurface.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\cgals2m.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\cgalv2m.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\deletemeshfile.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\elemvolume.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\extractloops.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\fallbackexeext.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\finddisconnsurf.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getexeext.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getoptkey.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getplanefrom3pt.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getvarfrom.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\internalpoint.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\iso2meshver.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\isoctavemesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\jsonopt.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\maxsurf.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mcpath.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mergestruct.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\meshcheckrepair.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\meshresample.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mwpath.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\qmeshcut.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\raytrace.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readmedit.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readoff.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readtetgen.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removedupelem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removedupnodes.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removeisolatednode.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removeisolatedsurf.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\s2m.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\saveinr.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\saveoff.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\savesurfpoly.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\sortmesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2mesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2vol.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2volz.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfedge.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfinterior.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfplane.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfseeds.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\v2m.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\v2s.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\varargin2struct.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2mesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2restrictedtri.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2surf.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_define_constants.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_dir_tree_find.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_make_dir_tree.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_open.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_read_tag.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_read_tag_info.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\fieldtrip\external\mne\mne_read_bem_surfaces.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\bemdata_spectral.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\bemdata_stnd.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\get_boundary_data_bem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_spectral_bem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_spectral_cw_bem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_stnd_bem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\mytsearchn_bem.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\bound_int.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\build_jacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\build_jacobian_cw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\femdata.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\build_jacobian_cw_fl.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\build_jacobian_fl.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\femdata_fl.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\jacobian_fl.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\gen_source_adjoint.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\gen_source_point.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\get_boundary_data.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\get_field.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\inside_tetrahedron.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\inside_triangle.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\jacobian.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\load_mesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\build_source.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\ele_area_c.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_2d.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_2d_sp5.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_3d.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_3d_sp5.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_source.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_source_fl.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntFG.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntFG_tet4.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntgradFgradG.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntgradFgradG_tet4.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\main_build_matrix_K.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\mesh_support.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\num_int.mexw64</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\move_detector.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\move_source.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\mytsearchn.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\parallel_init.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\pointLineDistance.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\pointTriangleDistance.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\calc_mua_mus.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\excoef.txt</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\femdata_spectral.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\jacobian_spectral.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\jacobian_spectral_cw.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\bound_coeffs.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\femdata_sp5.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\ksi_calc_sp5.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\standard\femdata_stnd.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirfast\toolbox\standard\jacobian_stnd.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirsviewer\javaclass.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\nirsviewer\javatypes.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\spm\ext1020.sfp</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\spm\icbm_spm2tal.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_base_mesh.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_butterfly_neighbors.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_semiregular_sphere.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\perform_mesh_subdivision.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\check_face_vertex.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_edge_face_ring.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_face_ring.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_mesh_weight.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_vertex_face_ring.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_vertex_ring.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\getoptions.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\perform_mesh_smoothing.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\progressbar.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\triangulation2adjacency.m</file>
-      <file>C:\Users\NIRS\Desktop\nirs-toolbox\external\treeTable\treeTable.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ChannelStats.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\draw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ftest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\jointTest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\printAll.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\transformNames.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@ChannelStats\ttest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+core\@Data\Data.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+eeg\+design\extractERP.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\ChannelFStats.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\draw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelFStats\printAll.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ChannelStats.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\draw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ftest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\gui.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\jointTest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\printAll.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\transformNames.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ChannelStats\ttest.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Data\Data.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Data\gui.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Data\private\updatewin.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@GenericData\GenericData.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Image\Image.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Mesh\Mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Probe1020\Probe1020.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Probe\draw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@Probe\Probe.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+core\@ProbeROI\ProbeROI.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\boundparam.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\nonlinearHRF.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\@nonlinearHRF\unboundparam.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\Canonical.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\FIR.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+basis\Gamma.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\+trend\constant.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\@StimulusEvents\StimulusEvents.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\@StimulusVector\StimulusVector.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\contrastvector.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\createDesignMatrix.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\createMultiVarDesignMat.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\extractHRF.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\mergeStims.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+design\vector2event.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@ApproxSlab\ApproxSlab.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\getConfig.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\jacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\MCXLab.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\measurement.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\saveFluence.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\spectralJacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@MCXLab\timeResolvedMeas.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\bemdata_stnd_PreK.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\getNirfastMeshes.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\jacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\measurement.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\NirfastBEM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastBEM\precomputeK.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\getNirfastMeshes.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\jacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\measurement.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+forward\@NirfastFEM\NirfastFEM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+io\loadDotNirs.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+io\loadNIR5.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+io\saveDotNirs.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+io\saveNIR5.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\nlinfit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statjacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statrobustsigma.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\+NonLinearModel\statrobustwfun.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\ar_fit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\ar_irls.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\fdr.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\fitlme.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\infocrit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\lagmatrix.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\MDC.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\mv_ar_irls.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\mysvd.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\robust_ar_fit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\robustfit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+math\stepwise.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+media\+tissues\brain.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+media\+tissues\skin.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+media\@OpticalProp\OpticalProp.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+media\@SpectralProp\SpectralProp.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+media\getspectra.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\AbstractModule.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\AddShortSeperationRegressors.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\AR_IRLS.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\Assert.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\BeerLambertLaw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\GLM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\KeepStims.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\MixedEffects.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\MultiVarGLM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\NIRS_SPM_GLM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\nonlin_GLM.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\OLS.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\OpticalDensity.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\pipelineToList.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\RemoveShortSeperations.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+modules\Resample.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+registration\+Colin27\mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+registration\cp2tform.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+reports\channelSummaryPlot.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+testing\randStimDesign.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+testing\simARNoise.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+testing\simData.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\combine_demographics.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\convertStimDesignStruct.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\createDictionaryFromToolset.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\fixnan.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\flushstdout.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\hasshortdistances.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\hdf5clearfield.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\hdf5getnames.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\list_1020pts.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\makeSDcolors.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\plotmesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\probe2sd.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\register_headsize.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\roiAverage.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\ROIhelper.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\rotateview.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\sd2probe.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\sortrows.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\spheremesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\uniquerows.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\+util\verify_formula.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\createDemographicsTable.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\+nirs\getStimNames.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\cbrewer\colorbrewer.mat</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\cbrewer\interpolate_cbrewer.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\cbrewer\plot_brewer_cmap.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\cylinder2P.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\DataHash.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\Dictionary\Dictionary.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\fileexchange\icp.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\bbxflatsegment.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\binsurface.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\cgals2m.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\cgalv2m.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\deletemeshfile.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\elemvolume.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\extractloops.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\fallbackexeext.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\finddisconnsurf.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getexeext.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getoptkey.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getplanefrom3pt.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\getvarfrom.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\internalpoint.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\iso2meshver.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\isoctavemesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\jsonopt.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\maxsurf.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mcpath.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mergestruct.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\meshcheckrepair.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\meshresample.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\mwpath.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\qmeshcut.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\raytrace.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readmedit.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readoff.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\readtetgen.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removedupelem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removedupnodes.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removeisolatednode.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\removeisolatedsurf.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\s2m.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\saveinr.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\saveoff.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\savesurfpoly.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\sortmesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2vol.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surf2volz.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfedge.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfinterior.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfplane.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\surfseeds.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\v2m.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\v2s.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\varargin2struct.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2restrictedtri.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\iso2mesh\vol2surf.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_define_constants.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_dir_tree_find.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_make_dir_tree.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_open.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_read_tag.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\fiff_read_tag_info.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\fieldtrip\external\mne\mne_read_bem_surfaces.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\bemdata_spectral.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\bemdata_stnd.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\get_boundary_data_bem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_spectral_bem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_spectral_cw_bem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\jacobian_stnd_bem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bem\mytsearchn_bem.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\bound_int.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\build_jacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\build_jacobian_cw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\femdata.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\build_jacobian_cw_fl.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\build_jacobian_fl.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\femdata_fl.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\fl\jacobian_fl.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\gen_source_adjoint.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\gen_source_point.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\get_boundary_data.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\get_field.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\inside_tetrahedron.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\inside_triangle.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\jacobian.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\load_mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\build_source.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\ele_area_c.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_2d.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_2d_sp5.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_3d.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_matrices_3d_sp5.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_source.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\gen_source_fl.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntFG.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntFG_tet4.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntgradFgradG.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\IntgradFgradG_tet4.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\main_build_matrix_K.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\mesh_support.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mex\num_int.mexw64</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\move_detector.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\move_source.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\mytsearchn.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\parallel_init.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\pointLineDistance.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\pointTriangleDistance.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\calc_mua_mus.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\excoef.txt</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\femdata_spectral.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\jacobian_spectral.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spectral\jacobian_spectral_cw.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\bound_coeffs.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\femdata_sp5.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\spn\ksi_calc_sp5.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\standard\femdata_stnd.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirfast\toolbox\standard\jacobian_stnd.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirsviewer\javaclass.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\nirsviewer\javatypes.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\spm\ext1020.sfp</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\spm\icbm_spm2tal.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_base_mesh.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_butterfly_neighbors.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\compute_semiregular_sphere.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\perform_mesh_subdivision.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\check_face_vertex.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_edge_face_ring.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_face_ring.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_mesh_weight.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_vertex_face_ring.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\compute_vertex_ring.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\getoptions.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\perform_mesh_smoothing.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\progressbar.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\toolbox_wavelet_meshes\toolbox\triangulation2adjacency.m</file>
+      <file>C:\Users\CW_TECHEN\Desktop\nirs-toolbox\external\treeTable\treeTable.m</file>
     </fileset.depfun>
     <build-deliverables>
-      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="BrainRecordIR.exe" optional="false">C:\Users\NIRS\Desktop\BrainRecordIR\BrainRecordIR\for_testing\BrainRecordIR.exe</file>
-      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="splash.png" optional="false">C:\Users\NIRS\Desktop\BrainRecordIR\BrainRecordIR\for_testing\splash.png</file>
-      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="readme.txt" optional="true">C:\Users\NIRS\Desktop\BrainRecordIR\BrainRecordIR\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="readme.txt" optional="true">C:\Users\CW_TECHEN\Desktop\brainrecordir\BrainRecordIR\for_testing\readme.txt</file>
+      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="splash.png" optional="false">C:\Users\CW_TECHEN\Desktop\brainrecordir\BrainRecordIR\for_testing\splash.png</file>
+      <file location="${PROJECT_ROOT}\BrainRecordIR\for_testing" name="BrainRecordIR.exe" optional="false">C:\Users\CW_TECHEN\Desktop\brainrecordir\BrainRecordIR\for_testing\BrainRecordIR.exe</file>
     </build-deliverables>
     <workflow />
     <matlab>
