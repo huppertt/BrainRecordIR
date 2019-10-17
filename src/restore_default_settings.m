@@ -10,13 +10,17 @@ else
     system.Type = "BTNIRS";
 end
 
+datafolder='BTNIRS_Data';
+if(ismac | isunix)
+    system.Folders.DefaultData = ['/Users/' getenv('USER') '/Desktop/' datafolder];
+else
+    system.Folders.DefaultData = [getenv('UserProfile') '\Desktop\' datafolder];
+end
 
-
-system.Folders.DefaultData = 'C:\Users\CW_TECHEN\Desktop\BTnirs_data';
 system.Folders.DefaultFileType = {'.nirs'};  % the file type that dat will be saved as (can be more then one)
 
-switch(system.Type)
-    case('Simulator')
+switch(upper(system.Type))
+    case('SIMULATOR')
         
         % the list laser to optode and wavelength info
         % this gives the freedom to use any combination of wavelengths (or numbers

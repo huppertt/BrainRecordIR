@@ -1,25 +1,37 @@
-function initializeApp(app)
+function initializeApp(app,systemType, datafolder)
 
 global BrainRecordIRApp;
  BrainRecordIRApp = app;
-
-% load a config file specifying the instrument and default folders
-folder=fileparts(which('BrainRecordIR.mlapp'));
-if(exist(fullfile(folder,'System.config'),'file'))
-    system=[];
-    load(fullfile(folder,'System.config'),'-MAT');   
-else
-   disp('Default configuration not found: restoring');
-   system=restore_default_settings;
-end
+ 
+ if(nargin<2 || isempty(systemType))
+     % load a config file specifying the instrument and default folders
+     folder=fileparts(which('BrainRecordIR.mlapp'));
+     if(exist(fullfile(folder,'System.config'),'file'))
+         system=[];
+         load(fullfile(folder,'System.config'),'-MAT');
+     else
+         disp('Default configuration not found: restoring');
+         system=restore_default_settings;
+     end
+ else
+     system=restore_default_settings(systemType);
+ end
+ 
+ if(nargin>2 && ~isempty(datafolder))
+     system.Folders.DefaultData=datafolder;
+ end
+ 
+SystemMessage(['Initializing ' char(system.Type)]);
 
 % Turn off the controls until a subject is registered.
 ControlEnable(false);
-
 app.SystemType=system.Type;
 
 app.Device=NIRSinstrument(app.SystemType);
+app.Device.sample_rate=system.SampleRatesDefault;
 % initialize the instrument class
+
+SystemMessage(app.Device.info);
 
 %% TODO-  change to allow enum selection based on instrument
 fs=[num2str(app.Device.sample_rate) 'Hz'];
@@ -31,24 +43,10 @@ end
 BrainRecordIRApp.SampleRateDropDown.Items=fs2;
 BrainRecordIRApp.SampleRateDropDown.Value=fs;
 
-if(strcmp(system.Type,'Simulator'))
-    comport='-------';
-elseif((strcmp(system.Type,'Simulator')) | (strcmp(system.Type,'CW6')) | (strcmp(system.Type,'Cw7')))
-    if(ismac)
-        c=dir('/dev/cu.Dual-SPP-SerialPort*');
-        if(~isempty(c))
-            comport=c(1).name;
-        else
-            comport='?';
-        end
-    else
-        comport='COM1';  % TODO
-    end
-else
-    comport='??';
-end
-BrainRecordIRApp.ConnectionEditField.Value=comport;
-SystemMessage(['Initializing ' char(system.Type) ' : ' comport]);
+system.Type=upper(system.Type);
+
+
+BrainRecordIRApp.ConnectionEditField.Value=app.Device.comport;
 
 app.Folders=system.Folders;
 
@@ -402,8 +400,6 @@ for i=length(system.Detectors.Detector2OptodeMapping)+1:size(app.handles.Detecto
 end
 
 
-
-% TO DO-  set default sample rate
 
 delete(app.ClinicalViewTab);
 

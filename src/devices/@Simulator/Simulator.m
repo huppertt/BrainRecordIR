@@ -2,6 +2,7 @@ classdef Simulator < handle
     properties
         sample_rate;
         isrunning;
+        comport;
     end
     properties( Dependent = true )
         samples_avaliable;
@@ -19,6 +20,7 @@ classdef Simulator < handle
     end
     methods
         function obj=Simulator
+            obj.comport='Simulator';
             obj.isrunning=false;
             obj.sample_rate=4;
             obj.nmeas=0;

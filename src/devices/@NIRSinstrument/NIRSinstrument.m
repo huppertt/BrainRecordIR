@@ -1,5 +1,6 @@
 classdef NIRSinstrument
   
+
    
    properties(Hidden = true)
         device;
@@ -9,9 +10,10 @@ classdef NIRSinstrument
    properties( Dependent = true )
        samples_avaliable;
        isrunning;
-       sample_rate;
+        sample_rate;
        isconnected;
        info;
+       comport;
    end
    
    
@@ -26,20 +28,28 @@ classdef NIRSinstrument
            function n= get.info(obj)
             n=obj.device.info;
         end
-       
+        function n= get.comport(obj)
+            n=obj.device.comport;
+        end
        function n = get.isrunning(obj)
            n=obj.device.isrunning;
+       end
+       
+       function obj=set.sample_rate(obj,Fs)
+           obj.device.sample_rate=Fs;
        end
        
        function n=get.sample_rate(obj)
            n=obj.device.sample_rate;
        end
+       
        function n = get.samples_avaliable(obj)
            n=obj.device.samples_avaliable;
        end
        
        function obj=set.type(obj,type)
-           if(strcmp(type,'Simulator'))
+           type=upper(type);
+           if(strcmp(type,'SIMULATOR'))
                obj.device=Simulator;
            elseif(strcmp(type,'BTNIRS'))
                obj.device=BTNIRS;

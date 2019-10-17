@@ -6,3 +6,5 @@ function SystemMessage(msg)
 global BrainRecordIRApp;
 
 BrainRecordIRApp.SystemMessageTextArea.Value{end+1}=msg;
+
+disp(['BrainRecordIR: ' msg]);
