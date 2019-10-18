@@ -175,7 +175,9 @@ try
 if(BrainRecordIRApp.Device.samples_avaliable>0)
     [d,t]=BrainRecordIRApp.Device.get_samples(BrainRecordIRApp.Device.samples_avaliable);
     % d=f.update(d')';
-    
+    if(isempty(t))
+        return
+    end
     
     BrainRecordIRApp.Subject.data(1).data=[BrainRecordIRApp.Subject.data(1).data; d];
     BrainRecordIRApp.Subject.data(1).time=[BrainRecordIRApp.Subject.data(1).time; t];

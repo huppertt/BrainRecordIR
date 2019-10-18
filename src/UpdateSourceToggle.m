@@ -8,7 +8,7 @@ SrcIdx = get(get(varargin{1},'parent'),'Userdata');
 
 BrainRecordIRApp.Device.setLaserState(laserIdx,state);
 
-linkall=BrainRecordIRApp.LinkColorsCheckBox.Value;
+linkall=BrainRecordIRApp.LinkWavelengthsCheckBox.Value;
 
 if(state)
     if(BrainRecordIRApp.handles.Lasers{SrcIdx,3}.UserData==laserIdx | linkall)
