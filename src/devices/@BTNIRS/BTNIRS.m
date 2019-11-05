@@ -73,6 +73,9 @@ classdef BTNIRS < handle
                     end
                 end
             end
+            
+            
+            
             if(isempty(obj.serialport))
                 warning('Failed to load device');
                 disp(int);
