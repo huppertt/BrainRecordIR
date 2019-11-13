@@ -1,6 +1,15 @@
 function Update_BrainRecorderAll(type)
 global BrainRecordIRApp;
 
+
+if(isfield(BrainRecordIRApp.Drawing,'MeasListAct') && ~any(BrainRecordIRApp.Drawing.MeasListAct))
+    set(BrainRecordIRApp.Drawing.SDGhandles(:),'Color',[.7 .7 .7]);
+    set(BrainRecordIRApp.Drawing.SDGhandles(:),'LineStyle','-');
+    set(BrainRecordIRApp.Drawing.Datahandles(:),'Visible','off');
+    
+    return
+end
+
 % TODO-
 str=BrainRecordIRApp.SelectDisplayType.Value;
 if(contains(str,'Raw'))
@@ -11,23 +20,23 @@ elseif(contains(str,'dOD'))
     str2=' [filtered]';
 elseif(contains(str,'HRF'))
     selected=1;
-     str2=' [filtered]';
+    str2=' [filtered]';
 else
     selected=3;
-     str2=' [filtered]';
+    str2=' [filtered]';
 end
 
 
 if(nargin<1)
-   if(selected==3)
+    if(selected==3)
         type=cellstr(str(strfind(str,':')+2:end));
-       
-   elseif(contains(str,'HRF'))
-       type=cellstr(str(strfind(str,':')+2:end));
-       
+        
+    elseif(contains(str,'HRF'))
+        type=cellstr(str(strfind(str,':')+2:end));
+        
     else
         type=str2double(str(strfind(str,':')+1:end-2));
-         
+        
     end
 end
 
@@ -35,7 +44,7 @@ end
 set(BrainRecordIRApp.Raw690nmunfilteredLabel,'Text',[str str2]);
 set(BrainRecordIRApp.Raw690nmunfilteredLabel,'FontWeight','bold');
 
-% use try/catch blocks here to handle any possible reasons why the 
+% use try/catch blocks here to handle any possible reasons why the
 % drawings may be messed up and reset
 try
     get(BrainRecordIRApp.Drawing.SDGhandles(1),'LineStyle');
@@ -74,26 +83,32 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
         set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
         
-    elseif(strcmp(type2,'2D View'))
+    elseif(strcmp(type2,'Flat View'))
         view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
-        set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
     else
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
-        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
+        nirs.util.lightsurface(BrainRecordIRApp.SDGPlotWindow);
     end
     
     if(strcmp(type2,'10-20 View'))
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
-   elseif(strcmp(type2,'2D View'))
+        text(BrainRecordIRApp.SDGPlotWindow,.95,.1,'R','units','normalized','FontWeight','BOLD','fontsize',28);
+
+    elseif(strcmp(type2,'Flat View'))
         view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
-        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
-       
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+        text(BrainRecordIRApp.SDGPlotWindow,0,0,'R','units','normalized','FontWeight','BOLD','fontsize',28);
+
     else
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
-        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
+        text(BrainRecordIRApp.SDGPlotWindow,0,.1,'R','units','normalized','FontWeight','BOLD','fontsize',28);
+
     end
     
 end
@@ -179,14 +194,15 @@ if(~isempty(BrainRecordIRApp.UIAxesStatsViewPlot.UserData))
         end
     end
     BrainRecordIRApp.Drawing.StatsHandles=Stats.probe.draw([],[],BrainRecordIRApp.UIAxesStatsViewPlot);
-     ChangeProbeViewStats;
+    ChangeProbeViewStats;
 end
 
 
 
-
-
-
+l=text(BrainRecordIRApp.SDGPlotWindow,.01,1,'ROI-RIGHT','units','normalized','FontWeight','BOLD');
+r=text(BrainRecordIRApp.SDGPlotWindow,.01,.9,'ROI-LEFT','units','normalized','FontWeight','BOLD');
+set(l,'ButtonDownFcn',@ClickROI1);
+set(r,'ButtonDownFcn',@ClickROI2);
 
 return
 
@@ -214,6 +230,75 @@ Update_BrainRecorderAll;
 return
 
 
+function ClickROI1(varargin)
+
+global BrainRecordIRApp;
+str=BrainRecordIRApp.SelectDisplayType.Value;
+if(contains(str,'Raw'))
+    selected=1;
+elseif(contains(str,'dOD'))
+    selected=2;
+elseif(contains(str,'HRF'))
+    selected=1;
+else
+    selected=3;
+end
+if(selected==3)
+    type=cellstr(str(strfind(str,':')+2:end));
+    
+elseif(contains(str,'HRF'))
+    type=cellstr(str(strfind(str,':')+2:end));
+    
+else
+    type=str2double(str(strfind(str,':')+1:end-2));
+    
+end
+link=BrainRecordIRApp.Subject.data(selected).probe.link;
+lstNull=~ismember(link.type,type);
+link(lstNull,:)=[];
+lst=find(ismember(link.source,[1 2]));
+if(sum(1*BrainRecordIRApp.Drawing.MeasListAct(lst)/length(lst))>=.5)
+    BrainRecordIRApp.Drawing.MeasListAct(lst)=false;
+else
+    BrainRecordIRApp.Drawing.MeasListAct(lst)=true;
+end
+Update_BrainRecorderAll;
 
 
+return
 
+function ClickROI2(varargin)
+
+global BrainRecordIRApp;
+str=BrainRecordIRApp.SelectDisplayType.Value;
+if(contains(str,'Raw'))
+    selected=1;
+elseif(contains(str,'dOD'))
+    selected=2;
+elseif(contains(str,'HRF'))
+    selected=1;
+else
+    selected=3;
+end
+if(selected==3)
+    type=cellstr(str(strfind(str,':')+2:end));
+    
+elseif(contains(str,'HRF'))
+    type=cellstr(str(strfind(str,':')+2:end));
+    
+else
+    type=str2double(str(strfind(str,':')+1:end-2));
+    
+end
+link=BrainRecordIRApp.Subject.data(selected).probe.link;
+lstNull=~ismember(link.type,type);
+link(lstNull,:)=[];
+lst=find(ismember(link.source,[3 4]));
+if(sum(1*BrainRecordIRApp.Drawing.MeasListAct(lst)/length(lst))>=.5)
+    BrainRecordIRApp.Drawing.MeasListAct(lst)=false;
+else
+    BrainRecordIRApp.Drawing.MeasListAct(lst)=true;
+end
+Update_BrainRecorderAll;
+
+return
