@@ -81,32 +81,32 @@ if(~isfield(BrainRecordIRApp,'Drawing') || ~isfield(BrainRecordIRApp.Drawing,'SD
     BrainRecordIRApp.Drawing.SDGhandles=BrainRecordIRApp.Subject.data(selected).probe.draw([],[],BrainRecordIRApp.SDGPlotWindow);
     if(strcmp(type2,'10-20 View'))
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
-        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
         
     elseif(strcmp(type2,'Flat View'))
         view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
-        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
     else
         set(BrainRecordIRApp.SDGPlotWindow,'YDir','normal');
-        set(BrainRecordIRApp.SDGPlotWindow,'XDir','reverse');
+        set(BrainRecordIRApp.SDGPlotWindow,'XDir','normal');
         nirs.util.lightsurface(BrainRecordIRApp.SDGPlotWindow);
     end
     
     if(strcmp(type2,'10-20 View'))
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
-        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
         text(BrainRecordIRApp.SDGPlotWindow,.95,.1,'R','units','normalized','FontWeight','BOLD','fontsize',28);
 
     elseif(strcmp(type2,'Flat View'))
         view(BrainRecordIRApp.SDGPlotWindow,0,90);
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
-        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
         text(BrainRecordIRApp.SDGPlotWindow,0,0,'R','units','normalized','FontWeight','BOLD','fontsize',28);
 
     else
         set(BrainRecordIRApp.UIAxesStatsViewPlot,'YDir','normal');
-        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','reverse');
+        set(BrainRecordIRApp.UIAxesStatsViewPlot,'XDir','normal');
         text(BrainRecordIRApp.SDGPlotWindow,0,.1,'R','units','normalized','FontWeight','BOLD','fontsize',28);
 
     end
