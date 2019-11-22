@@ -50,8 +50,9 @@ classdef BTNIRS < handle
             
             obj.serialport=[];
             if(ispc)
-                for i=30:-1:1
+                for i=40:-1:1
                     try
+                        disp(['trying COM' num2str(i)])
                         obj.serialport=serial(['COM' num2str(i)]);
                         
                         set(obj.serialport, 'FlowControl', 'none');
@@ -78,7 +79,7 @@ classdef BTNIRS < handle
             
             if(isempty(obj.serialport))
                 warning('Failed to load device');
-                disp(int);
+                %disp(int);
                 error('unable to start');
                 return;
             end
