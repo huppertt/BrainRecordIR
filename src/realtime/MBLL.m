@@ -35,7 +35,14 @@ classdef MBLL < handle
             t=unique(probe.link.type);
             link=probe.link;
             link(ismember(probe.link.type,t([1 2])),:);
-            link.type=repmat({'hbo','hbr'}',height(usd),1);
+            for i=1:height(link)
+                if(link.type(i)==t(1))
+                    type2{i,1}='hbo';
+                else
+                    type2{i,1}='hbr';
+                end
+            end
+            link.type=type2;
             obj.probeout=probe;
             obj.probeout.link=link;
         end
